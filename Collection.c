@@ -219,7 +219,7 @@ void ajouterPosListe(Liste liste, Voiture voiture, int position)
             prec = liste->queue->precedent;
 
             // On parcours la liste pour avoir le futur precedent et le futur suivant de l'element a ajouter
-            for (int i = 1; i < position; i++)
+            for (int i = 1; i <= (liste->taille - position); i++)
             {
                 prec = prec->precedent;
                 suiv = prec->suivant;
@@ -276,18 +276,54 @@ Voiture recupTeteListe(const_Liste liste)
     return liste->tete->voiture;
 }
 
-Voiture recupQueueListe(const_Liste liste);
+Voiture recupQueueListe(const_Liste liste)
+{
+    return liste->queue->voiture;
+}
 
 Voiture recupPosListe(Liste liste, int position)
-{
-    Element * elem = liste->tete;
+{      
+    myassert(position >= 0, "La position doit etre positive");
+    myassert(position <= liste->taille, "La position ne doit pas etre plus grande que la taille de la liste");
 
-    for (int i = 0; i < position; i++)
+    // Si la position correspond a la tete de la liste
+    if (position  == 0)
     {
-        elem = elem->suivant;
+        recupTeteListe(liste);
     }
+    // Si la position correspond a la queue de la liste
+    else if (position == liste->taille)
+    {
+        recupQueueListe(liste);
+    }
+    // Si la position correspond ni a la tete ni a la queue
+    else
+    {
+        Element * elem;
 
-    return elem->voiture;
+        // Si la position est plus proche de la tete on rentre par la tete
+        if(position < (liste->taille / 2))
+        {
+            elem = liste->tete;
+
+            for (int i = 1; i < position; i++)
+            {
+                elem = elem->suivant;
+            }
+        }
+        // Si la position est plus proche de la queue on rentre par la queue
+        else
+        {
+            elem = liste->queue;
+
+            for (int i = 1; i <= (liste->taille - position); i++)
+            {
+                elem = elem->precedent;
+            }
+        }
+
+        return elem->voiture;
+    }
 }
 
 
