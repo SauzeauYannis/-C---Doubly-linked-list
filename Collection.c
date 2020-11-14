@@ -19,6 +19,7 @@
 #include "Voiture.h"
 #include "Collection.h"
 #include "myassert.h"
+#include "Liste.h"
 
 
 /*-----------------------*
