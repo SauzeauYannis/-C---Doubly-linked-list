@@ -596,7 +596,7 @@ void col_afficher(const_Collection self)
         printf("[**** La collection n'est pas triée\n");
     }
     
-    for(int i=0; i<size-1; i++)
+    for(int i=0; i<size; i++)
     {
         printf("---------------------------\n");
         printf("Voiture %d : \n", i);
