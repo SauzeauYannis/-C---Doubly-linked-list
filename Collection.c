@@ -201,7 +201,7 @@ void ajouterPosListe(Liste liste, Voiture voiture, int position)
         if(position < (liste->taille / 2))
         {
             // On prend la tete de la liste
-            suiv = liste->tete;
+            suiv = liste->tete->suivant;
             prec = liste->tete;
 
             // On parcours la liste pour avoir le futur precedent et le futur suivant de l'element a ajouter
@@ -216,12 +216,12 @@ void ajouterPosListe(Liste liste, Voiture voiture, int position)
         {
             // On prend la queue de la liste
             suiv = liste->queue;
-            prec = liste->queue;
+            prec = liste->queue->precedent;
 
             // On parcours la liste pour avoir le futur precedent et le futur suivant de l'element a ajouter
             for (int i = 1; i < position; i++)
             {
-                prec = suiv->precedent;
+                prec = prec->precedent;
                 suiv = prec->suivant;
             }
         }
@@ -278,7 +278,17 @@ Voiture recupTeteListe(const_Liste liste)
 
 Voiture recupQueueListe(const_Liste liste);
 
-Voiture recupPosListe(Liste liste, int position);
+Voiture recupPosListe(Liste liste, int position)
+{
+    Element * elem = liste->tete;
+
+    for (int i = 0; i < position; i++)
+    {
+        elem = elem->suivant;
+    }
+
+    return elem->voiture;
+}
 
 
 /*---------------------------*
