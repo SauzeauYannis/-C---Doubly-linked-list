@@ -53,13 +53,13 @@ int main()
     /*----------------------
      * Test ajouterPosListe
      *---------------------*/
-    // ajouterPosListe(mylist, v1, 0);
-    // ajouterPosListe(mylist, v7, 1);
-    // ajouterPosListe(mylist, v2, 1);
-    // ajouterPosListe(mylist, v3, 2);
-    // ajouterPosListe(mylist, v6, 3);
-    // ajouterPosListe(mylist, v4, 3);
-    //ajouterPosListe(mylist, v5, 4);
+    ajouterPosListe(mylist, v1, 0);
+    ajouterPosListe(mylist, v7, 1);
+    ajouterPosListe(mylist, v2, 1);
+    ajouterPosListe(mylist, v3, 2);
+    ajouterPosListe(mylist, v6, 3);
+    ajouterPosListe(mylist, v4, 3);
+    ajouterPosListe(mylist, v5, 4);
 
     // viderListe(mylist);
 
@@ -75,13 +75,37 @@ int main()
     // voi_afficher(recupPosListe(mylist, 5));
     // voi_afficher(recupPosListe(mylist, 6));
 
-    /*----------------------
-     * Test Suppression
-     *---------------------*/
+    /*-------------------------
+     * Test supprimerTeteListe
+     *------------------------*/
 
-    // supprimerTeteListe(mylist);
+    supprimerTeteListe(mylist);
+    supprimerTeteListe(mylist);
+    supprimerTeteListe(mylist);
+    supprimerTeteListe(mylist);
+    supprimerTeteListe(mylist);
+    supprimerTeteListe(mylist);
+    supprimerTeteListe(mylist);
+
+    /*--------------------------
+     * Test supprimerQueueListe
+     *-------------------------*/
+
     // supprimerQueueListe(mylist);
+    // supprimerQueueListe(mylist);
+    // supprimerQueueListe(mylist);
+    // supprimerQueueListe(mylist);
+    // supprimerQueueListe(mylist);
+    // supprimerQueueListe(mylist);
+    // supprimerQueueListe(mylist);
+
+    /*--------------------------
+     * Test supprimerQueueListe
+     *-------------------------*/
+
     // supprimerPosListe(mylist, 0);
+    // supprimerPosListe(mylist, 2);
+    // supprimerPosListe(mylist, 1);
     // supprimerPosListe(mylist, 3);
     // supprimerPosListe(mylist, 1);  
     // supprimerPosListe(mylist, 1);
@@ -95,20 +119,20 @@ int main()
 
     // viderListe(mylist);
 
-    detruireListe(&mylist);
+    // detruireListe(&mylist);
 
     /*----------------------
      * Test Collection
      *---------------------*/
 
-    Collection mycol = col_creer();
+    // Collection mycol = col_creer();
 
-    //printf("nb voitures : %d\n", col_getNbVoitures(mycol));
-    Voiture v =col_getVoiture(mycol, 0);
+    // printf("nb voitures : %d\n", col_getNbVoitures(mycol));
+    // Voiture v = col_getVoiture(mycol, 0);
     
-    col_vider(mycol);
+    // col_vider(mycol);
 
-    col_detruire(&mycol);
+    // col_detruire(&mycol);
 
     return EXIT_SUCCESS;
 }

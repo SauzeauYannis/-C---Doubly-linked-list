@@ -336,8 +336,8 @@ void supprimerTeteListe(Liste liste)
     free(liste->tete->voiture);
 
     // On libère l'élément précédent
-    free(liste->tete->precedent);
-    liste->tete->suivant = NULL;
+    // free(liste->tete->precedent);
+    // liste->tete->suivant = NULL;
     
     // On libère la tête courante de la liste
     free(liste->tete);
@@ -359,7 +359,7 @@ void supprimerQueueListe(Liste liste)
     free(liste->queue->voiture);
 
     // On libère l'élément suivant
-    free(liste->queue->suivant);
+    // free(liste->queue->suivant);
     
     // On libère la queue courante de la liste
     free(liste->queue);
@@ -373,6 +373,8 @@ void supprimerQueueListe(Liste liste)
 void supprimerPosListe(Liste liste, int position)
 {
     myassert(liste->taille > 0, "la taille de la liste doit être strictement supérieur à 0");
+    myassert(position >= 0, "La position doit etre positive");
+    myassert(position <= liste->taille, "La position ne doit pas etre plus grande que la taille de la liste");
 
         Element* elem = recupElemPosListe(liste, position);
         Element* suiv = elem->suivant;
@@ -478,6 +480,8 @@ int col_getNbVoitures(const_Collection self)
 Voiture col_getVoiture(const_Collection self, int pos)
 {
     myassert(self->listeVoitures != NULL, "col_getVoiture : la liste ne doit pas être vide");
+    myassert(pos >= 0, "La position doit etre positive");
+    myassert(pos <= self->listeVoitures->taille, "La position ne doit pas etre plus grande que la taille de la liste");
 
     return recupPosListe(self, pos);
 }
