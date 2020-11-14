@@ -60,8 +60,11 @@ int main()
     ajouterPosListe(mylist, v6, 3);
     ajouterPosListe(mylist, v4, 3);
     ajouterPosListe(mylist, v5, 4);
+<<<<<<< HEAD
 
     viderListe(&mylist);
+=======
+>>>>>>> e6f42170c48358c4a3662ee534fbd608dd5d8379
 
     voi_afficher(recupPosListe(mylist, 0));
     voi_afficher(recupPosListe(mylist, 1));
