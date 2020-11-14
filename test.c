@@ -79,13 +79,13 @@ int main()
      * Test supprimerTeteListe
      *------------------------*/
 
-    supprimerTeteListe(mylist);
-    supprimerTeteListe(mylist);
-    supprimerTeteListe(mylist);
-    supprimerTeteListe(mylist);
-    supprimerTeteListe(mylist);
-    supprimerTeteListe(mylist);
-    supprimerTeteListe(mylist);
+    // supprimerTeteListe(mylist);
+    // supprimerTeteListe(mylist);
+    // supprimerTeteListe(mylist);
+    // supprimerTeteListe(mylist);
+    // supprimerTeteListe(mylist);
+    // supprimerTeteListe(mylist);
+    // supprimerTeteListe(mylist);
 
     /*--------------------------
      * Test supprimerQueueListe
@@ -103,18 +103,18 @@ int main()
      * Test supprimerQueueListe
      *-------------------------*/
 
-    // supprimerPosListe(mylist, 0);
-    // supprimerPosListe(mylist, 2);
-    // supprimerPosListe(mylist, 1);
-    // supprimerPosListe(mylist, 3);
-    // supprimerPosListe(mylist, 1);  
-    // supprimerPosListe(mylist, 1);
-    // supprimerPosListe(mylist, 0);
+    supprimerPosListe(mylist, 0);
+    supprimerPosListe(mylist, 2);
+    supprimerPosListe(mylist, 1);
+    supprimerPosListe(mylist, 3);
+    supprimerPosListe(mylist, 1);  
+    supprimerPosListe(mylist, 1);
+    supprimerPosListe(mylist, 0);
 
-    voi_afficher(recupPosListe(mylist, 0));
-    voi_afficher(recupPosListe(mylist, 1));
-    voi_afficher(recupPosListe(mylist, 2));
-    //voi_afficher(recupPosListe(mylist, 3));
+    // voi_afficher(recupPosListe(mylist, 0));
+    // voi_afficher(recupPosListe(mylist, 1));
+    // voi_afficher(recupPosListe(mylist, 2));
+    // //voi_afficher(recupPosListe(mylist, 3));
     //voi_afficher(recupPosListe(mylist, 4));
 
     // viderListe(mylist);

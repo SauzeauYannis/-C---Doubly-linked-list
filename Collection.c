@@ -327,7 +327,7 @@ void ajouterPosListe(Liste liste, Voiture voiture, int position)
 
 void supprimerTeteListe(Liste liste)
 {
-    myassert(!estVideListe(liste), "supprimerTeteListe : la liste est vide");
+    myassert(!estVideListe(liste), "la liste est vide");
 
     if(liste->taille == 1)
     {
@@ -353,7 +353,7 @@ void supprimerTeteListe(Liste liste)
 
 void supprimerQueueListe(Liste liste)
 {
-    myassert(!estVideListe(liste), "supprimerQueueListe : la liste est vide");
+    myassert(!estVideListe(liste), "la liste est vide");
 
     if(liste->taille == 1)
     {
@@ -379,7 +379,7 @@ void supprimerQueueListe(Liste liste)
 
 void supprimerPosListe(Liste liste, int position)
 {
-    myassert(liste->taille > 0, "la taille de la liste doit être strictement supérieur à 0");
+    myassert(!estVideListe(liste), "la liste est vide");
     myassert(position >= 0, "La position doit etre positive");
     myassert(position <= liste->taille, "La position ne doit pas etre plus grande que la taille de la liste");
 
