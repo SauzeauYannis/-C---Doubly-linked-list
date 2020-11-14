@@ -21,7 +21,6 @@
 #include "myassert.h"
 #include "Liste.h"
 
-
 /*-----------------------*
  * Structure de la liste
  *-----------------------*/
@@ -274,18 +273,12 @@ void supprimerPosListe(Liste liste, int position);
 
 Voiture recupTeteListe(const_Liste liste)
 {
-    
+    return liste->tete->voiture;
 }
 
-Voiture recupQueueListe(const_Liste liste)
-{
-    
-}
+Voiture recupQueueListe(const_Liste liste);
 
-Voiture recupPosListe(Liste liste, int position)
-{
-    
-}
+Voiture recupPosListe(Liste liste, int position);
 
 
 /*---------------------------*

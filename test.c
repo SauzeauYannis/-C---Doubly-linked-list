@@ -9,11 +9,35 @@
 #include "Liste.h"
 #include "Collection.h"
 
+#define MAX_LEN 1000
 
-int main(int argc, char const *argv[])
+
+int main()
 {
 	Liste mylist = creerListeVide();
     bool b1 = estVideListe(mylist);
     printf("%d \n", b1);
-    return 0;
+
+    Voiture v1, v2, v3;
+    char tmpMarque[MAX_LEN+1];
+    char tmpImmatriculation[MAX_LEN+1];
+
+    const char *tmp[2] = {"1234 AE 75", "VH 529 FE"};
+    v1 = voi_creer("Trombine", 2005, 34587, 2, tmp);
+    v2 = voi_creerCopie(v1);
+    v3 = voi_creerCopie(v1);
+    voi_addImmatriculation(v2, "VY 749 RT");
+    voi_setKilometrage(v2, 38951);
+
+    ajouterTeteListe(mylist, v1);
+    ajouterTeteListe(mylist, v2);
+    ajouterTeteListe(mylist, v3);
+    ajouterTeteListe(mylist, v1);
+    ajouterPosListe(mylist, v2, 1);
+
+    voi_afficher(recupTeteListe(mylist));
+
+    detruireListe(&mylist);
+
+    return EXIT_SUCCESS;
 }
