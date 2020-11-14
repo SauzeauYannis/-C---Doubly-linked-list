@@ -87,26 +87,25 @@ void detruireListe(Liste * liste)
     }
 }
 
-void viderListe(Liste * liste)
+void viderListe(Liste liste)
 {
-    while((*liste)->tete != NULL)
+    while(liste->tete != NULL)
         {
-            Element* suiv = (*liste)->tete->suivant;
+            Element* suiv = liste->tete->suivant;
 
             // On détruit et libère la mémoire de la voiture de l'élément de la tête
-            voi_detruire(&((*liste)->tete->voiture));
-            free((*liste)->tete->voiture);
+            voi_detruire(&(liste->tete->voiture));
+            free(liste->tete->voiture);
 
             // On libère l'élément et précédents
-            free((*liste)->tete->precedent);
+            free(liste->tete->precedent);
                          
             // On pointe le prochain élément sur la tête
-            (*liste)->tete = suiv;
+            liste->tete = suiv;
         }
-    free((*liste)->queue);
-    (*liste)->tete = NULL;
-    (*liste)->queue = NULL;
-    (*liste)->taille = 0;
+    liste->tete = NULL;
+    liste->queue = NULL;
+    liste->taille = 0;
 }
 
 
@@ -322,7 +321,10 @@ void ajouterPosListe(Liste liste, Voiture voiture, int position)
  * Fonctions suppression d'un element
  *------------------------------------*/
 
-void supprimerTeteListe(Liste liste);
+void supprimerTeteListe(Liste liste)
+{
+    myassert(estVideListe(liste), "la liste est vide 'supprimerTeteListe' ne peut pas supprimer")
+}
 
 void supprimerQueueListe(Liste liste);
 

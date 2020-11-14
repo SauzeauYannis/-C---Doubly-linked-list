@@ -23,7 +23,7 @@ Liste creerListeVide(void);
 
 void detruireListe(Liste * liste);
 
-void viderListe(Liste * liste);
+void viderListe(Liste liste);
 
 /*------------------------------------*
  * Fonctions vérification de la liste
