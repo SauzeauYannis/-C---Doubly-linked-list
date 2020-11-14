@@ -327,7 +327,7 @@ void ajouterPosListe(Liste liste, Voiture voiture, int position)
 
 void supprimerTeteListe(Liste liste)
 {
-    myassert(!estVideListe(liste), "supprimerTeteListe : la liste est vide");
+    myassert(!estVideListe(liste), "La liste est vide");
 
     if(liste->taille == 1)
     {
@@ -353,7 +353,7 @@ void supprimerTeteListe(Liste liste)
 
 void supprimerQueueListe(Liste liste)
 {
-    myassert(!estVideListe(liste), "supprimerQueueListe : la liste est vide");
+    myassert(!estVideListe(liste), "La liste est vide");
 
     if(liste->taille == 1)
     {
@@ -413,7 +413,6 @@ void supprimerPosListe(Liste liste, int position)
             // On libère l'élément de la position courante
             free(elem);        
             liste->taille--;
-        
         }
 }
 
