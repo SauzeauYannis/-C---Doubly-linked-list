@@ -79,13 +79,13 @@ void ajouterTeteListe(Liste liste, Voiture voiture)
     // Si il y a déjà des elements dans la liste
     else
     {
-        // L'ancienne tete a l'elem en precedent
-
-
         // Suivant est l'ancienne tete et pas de precedent
         elem->suivant = (Element *) malloc(sizeof(struct element));
         elem->suivant = liste->tete;
         elem->precedent = NULL;
+
+        // L'ancienne tete a la nouvelle tete en precedent
+        (liste->tete)->precedent = elem;
 
         // Seule la tete change
         liste->tete = elem;
@@ -97,18 +97,27 @@ void ajouterTeteListe(Liste liste, Voiture voiture)
 void ajouterQueueListe(Liste liste, Voiture voiture)
 {
     // Nouvel element à ajouter
-
     Element * elem = (Element *) malloc(sizeof(struct element));
+    elem->voiture = voiture;
 
     // Si il n'y a pas d'element dans la liste
     if (estVideListe(liste))
     {
         ajouterListeVide(liste, elem);
     }
-    // Si il y a déjà des elements dans la liste
+    // Si il y a deja des elements dans la liste
     else
     {
+        // Precedent est l'ancienne queue et pas de suivant
+        elem->precedent = (Element *) malloc(sizeof(struct element));
+        elem->precedent = liste->queue;
+        elem->suivant = NULL;
 
+        // L'ancienne queue a la nouvelle queue en suivant
+        (liste->queue)->suivant = elem;
+
+        // Seule la queue change
+        liste->queue = elem;
     }
     
     liste->taille++;
@@ -116,22 +125,73 @@ void ajouterQueueListe(Liste liste, Voiture voiture)
 
 void ajouterPosListe(Liste liste, Voiture voiture, int position)
 {
-    // Nouvel element à ajouter
+    myassert(position >= 0, "La position doit etre positive");
+    myassert(position <= liste->taille, "La position ne doit pas etre plus grande que la taille de la liste");
 
-    Element * elem = (Element *) malloc(sizeof(struct element));
-
-    // Si il n'y a pas d'element dans la liste
-    if (estVideListe(liste))
+    // Si la position correspond a la tete de la liste
+    if (position  == 0)
     {
-        ajouterListeVide(liste, elem);
+        ajouterTeteListe(liste, voiture);
     }
-    // Si il y a déjà des elements dans la liste
+    // Si la position correspond a la queue de la liste
+    else if (position == liste->taille)
+    {
+        ajouterQueueListe(liste, voiture);
+    }
+    // Si la position correspond ni a la tete ni a la queue
     else
     {
+        // Nouvel element à ajouter
+        Element * elem = (Element *) malloc(sizeof(struct element));
+        elem->voiture = voiture;
 
-    }
+        // On stocke le futur precedent et le futur suivant de l'element a ajouter
+        Element * suiv;
+        Element * prec;
+
+        // Si la position est plus proche de la tete on rentre par la tete
+        if(position < (liste->taille / 2))
+        {
+            // On prend la tete de la liste
+            suiv = liste->tete;
+            prec = liste->tete;
+
+            // On parcours la liste pour avoir le futur precedent et le futur suivant de l'element a ajouter
+            for (int i = 1; i < position; i++)
+            {
+                suiv = suiv->suivant;
+                prec = suiv->precedent;
+            }
+        }
+        // Si la position est plus proche de la queue on rentre par la queue
+        else
+        {
+            // On prend la queue de la liste
+            suiv = liste->queue;
+            prec = liste->queue;
+
+            // On parcours la liste pour avoir le futur precedent et le futur suivant de l'element a ajouter
+            for (int i = 1; i < position; i++)
+            {
+                prec = suiv->precedent;
+                suiv = prec->suivant;
+            }
+        }
+
+        // On met l'element precedent et suivant dans le nouveau element
+        elem->precedent = (Element *) malloc(sizeof(struct element));
+        elem->suivant = (Element *) malloc(sizeof(struct element));
+        elem->precedent = prec;
+        elem->suivant = suiv;
+
+        // On met a jour le suivant du precedent de l'element qui a ete ajoute
+        prec->suivant = elem;
+
+        // On met a jour le precedent du suivant de l'element qui a ete ajoute
+        suiv->precedent = elem;
     
-    liste->taille++;
+        liste->taille++;
+    }
 }
 
 void ajouterListeVide(Liste liste, Element * elem)
