@@ -47,18 +47,66 @@ typedef const struct ListeP * const_Liste;
  * Fonctions initialisation de la liste
  *-------------------------------------*/
 
-Liste creerListeVide(void);
+Liste creerListeVide(void)
+{
+    Liste list = (Liste)malloc(sizeof(struct ListeP));
 
-void viderListe(Liste * liste);
+    list->taille = 0;
+    list->tete = NULL;
+    list->queue = NULL;
 
-void detruireListe(Liste * liste);
+    return list;
+}
+
+void detruireListe(Liste * liste)
+{
+    if((*liste) != NULL)
+    {
+        while((*liste)->tete->suivant != NULL)
+        {
+            // On détruit et libère la mémoire de la voiture de l'élément de la tête
+            voi_detruire(&(*liste)->tete->voiture);
+            free((*liste)->tete->voiture);
+            // On libère la mémoire de la tête
+            (*liste)->tete = NULL;
+            free((*liste)->tete);
+            // On pointe le prochain élément sur la tête
+            (*liste)->tete = (*liste)->tete->suivant;
+        }
+        // On libère la mémoire de la liste
+        free(*liste);
+        (*liste) = NULL;
+    } else {
+        myassert((*liste) == NULL, "La liste est nulle");        
+    }
+}
+
+void viderListe(Liste * liste)
+{
+    while((*liste)->tete->suivant != NULL)
+    {
+        // On détruit et libère la mémoire de la voiture de l'élément de la tête
+        voi_detruire(&(*liste)->tete->voiture);
+        free((*liste)->tete->voiture);
+        // On libère la mémoire de la tête
+        (*liste)->tete = NULL;
+        free((*liste)->tete);
+        // On pointe le prochain élément sur la tête
+        (*liste)->tete = (*liste)->tete->suivant;
+    }
+    (*liste)->queue = NULL;
+    (*liste)->taille = 0;
+}
 
 
 /*------------------------------------*
  * Fonctions vérification de la liste
  *------------------------------------*/
 
-bool estVideListe(Liste liste);
+bool estVideListe(Liste liste)
+{
+    return (liste->taille == 0) && (liste->tete == NULL) && (liste->queue ==NULL);
+}
 
 
 /*------------------------------*
