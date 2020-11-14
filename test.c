@@ -159,8 +159,38 @@ int main()
     voi_afficher(col_getVoiture(mycol, 4));
     voi_afficher(col_getVoiture(mycol, 5));
     voi_afficher(col_getVoiture(mycol, 6));
+
+    /*-------------------
+     * Test col_afficher
+     *------------------*/
+
+    col_afficher(mycol);
+
+    /*-------------------------------
+     * Test col_supprVoitureSansTri
+     *------------------------------*/
+
+    col_supprVoitureSansTri(mycol, 5);
+    col_supprVoitureSansTri(mycol, 4);
+    col_supprVoitureSansTri(mycol, 0);
+    col_supprVoitureSansTri(mycol, 2);
+    col_supprVoitureSansTri(mycol, 1);
+    col_supprVoitureSansTri(mycol, 0);
+    col_supprVoitureSansTri(mycol, 0);
+
+    /*-------------------------------
+     * Test col_supprVoitureAvecTri
+     *------------------------------*/
+
+    // col_supprVoitureAvecTri(mycol, 5);
+    // col_supprVoitureAvecTri(mycol, 4);
+    // col_supprVoitureAvecTri(mycol, 0);
+    // col_supprVoitureAvecTri(mycol, 2);
+    // col_supprVoitureAvecTri(mycol, 1);
+    // col_supprVoitureAvecTri(mycol, 0);
+    // col_supprVoitureAvecTri(mycol, 0);
     
-    col_vider(mycol);
+    // col_vider(mycol);
 
     col_detruire(&mycol);
 
