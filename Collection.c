@@ -572,7 +572,25 @@ void col_supprVoitureAvecTri(Collection self, int pos)
     supprimerPosListe(self->listeVoitures, pos);    
 }
 
-void col_trier(Collection self);
+void col_trier(Collection self)
+{
+    if (!self->estTriee)
+    {
+        for (int i = 0; i < self->listeVoitures->taille; i++) 
+        {
+            for (int j = 0; i < i; i++)
+            {
+                Voiture v = recupPosListe(self->listeVoitures, j);
+                Voiture vSuivant = recupPosListe(self->listeVoitures, j + 1);
+
+                if (voi_getAnnee(vSuivant) < voi_getAnnee(v))
+                {
+                    voi_swap(v, vSuivant)
+                }
+            }
+        }
+    }
+}
 
 
 /*----------------------*
