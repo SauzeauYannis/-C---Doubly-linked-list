@@ -49,6 +49,8 @@ typedef const struct ListeP * const_Liste;
 
 Liste creerListeVide(void);
 
+void viderListe(Liste * liste);
+
 void detruireListe(Liste * liste);
 
 
