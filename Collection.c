@@ -19,7 +19,6 @@
 #include "Voiture.h"
 #include "Collection.h"
 #include "myassert.h"
-#include "Liste.h"
 
 /*-----------------------*
  * Structure de la liste
@@ -447,14 +446,14 @@ Collection col_creerCopie(const_Collection source)
     Collection self = (Collection)malloc(sizeof(struct CollectionP));
 
     self->estTriee = source->estTriee;
+    self->listeVoitures = creerListeVide();
     
-    int size = source->listeVoitures->taille;
-    for(int i=0; i<size; i++)
+    for(int i = 0; i < source->listeVoitures->taille; i++)
     {   
         // On récupère chaque voiture à la position courante
-        Voiture v = recupPosListe(source, i);
+        Voiture v = recupPosListe(source->listeVoitures, i);
         // Puis on l'ajoute à la queue de la liste
-        ajouterQueueListe(self, voi_creerCopie(v));
+        ajouterQueueListe(self->listeVoitures, voi_creerCopie(v));
     }
 
     return self;
@@ -576,7 +575,7 @@ void col_trier(Collection self)
 {
     if (!self->estTriee)
     {
-        for (int i = 0; i < self->listeVoitures->taille; i++) 
+        for (int i = (self->listeVoitures->taille - 1); i > 0; i--) 
         {
             for (int j = 0; j < i; j++)
             {
@@ -589,6 +588,7 @@ void col_trier(Collection self)
                 }
             }
         }
+        self->estTriee = true;
     }
 }
 
@@ -630,6 +630,12 @@ void col_afficher(const_Collection self)
  * Fonctions entrées-sorties fichiers
  *--------------------------------------*/
 
-void col_ecrireFichier(const_Collection self, FILE *fd);
+void col_ecrireFichier(const_Collection self, FILE *fd)
+{
+    return;
+}
 
-void col_lireFichier(Collection self, FILE *fd);
+void col_lireFichier(Collection self, FILE *fd)
+{
+    return;
+}

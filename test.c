@@ -128,25 +128,33 @@ int main()
      * Test col_addVoitureSansTri
      *----------------------------*/
 
-    // col_addVoitureSansTri(mycol, v1);
-    // col_addVoitureSansTri(mycol, v2);
-    // col_addVoitureSansTri(mycol, v3);
-    // col_addVoitureSansTri(mycol, v4);
-    // col_addVoitureSansTri(mycol, v5);
-    // col_addVoitureSansTri(mycol, v6);
-    // col_addVoitureSansTri(mycol, v7);
+    col_addVoitureSansTri(mycol, v7);
+    col_addVoitureSansTri(mycol, v3);
+    col_addVoitureSansTri(mycol, v1);
+    col_addVoitureSansTri(mycol, v5);
+    col_addVoitureSansTri(mycol, v4);
+    col_addVoitureSansTri(mycol, v2);
+    col_addVoitureSansTri(mycol, v6);
 
     /*-----------------------------
      * Test col_addVoitureAvecTri
      *----------------------------*/
 
-    col_addVoitureAvecTri(mycol, v1);
-    col_addVoitureAvecTri(mycol, v3);
-    col_addVoitureAvecTri(mycol, v7);
-    col_addVoitureAvecTri(mycol, v5);
-    col_addVoitureAvecTri(mycol, v2);
-    col_addVoitureAvecTri(mycol, v4);
-    col_addVoitureAvecTri(mycol, v6);
+    // col_addVoitureAvecTri(mycol, v1);
+    // col_addVoitureAvecTri(mycol, v3);
+    // col_addVoitureAvecTri(mycol, v7);
+    // col_addVoitureAvecTri(mycol, v5);
+    // col_addVoitureAvecTri(mycol, v2);
+    // col_addVoitureAvecTri(mycol, v4);
+    // col_addVoitureAvecTri(mycol, v6);
+
+    /*-------------------
+     * Test col_trier()
+     *------------------*/
+    
+    col_afficher(mycol);
+    col_trier(mycol);
+    col_afficher(mycol);
 
     /*------------------------
      * Test col_getVoiture()
