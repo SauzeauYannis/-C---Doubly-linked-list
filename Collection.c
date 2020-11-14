@@ -123,13 +123,112 @@ void viderListe(Liste * liste)
 
 bool estVideListe(Liste liste)
 {
-    return (liste->taille == 0) && (liste->tete == NULL) && (liste->queue ==NULL);
+    return (liste->taille == 0) && (liste->tete == NULL) && (liste->queue == NULL);
+}
+
+
+/*------------------------------------*
+ * Fonctions récupération d'un element
+ *------------------------------------*/
+
+Element * recupElemPosListe(const_Liste liste, int position)
+{
+    myassert(position >= 0, "La position doit etre positive");
+    myassert(position < liste->taille, "La position ne doit pas etre plus grande que la taille de la liste");
+
+    // Si la position correspond a la tete de la liste
+    if (position  == 0)
+    {
+        return liste->tete;
+    }
+    // Si la position correspond a la queue de la liste
+    else if (position == (liste->taille - 1))
+    {
+        return liste->queue;
+    }
+    // Si la position correspond ni a la tete ni a la queue
+    else
+    {
+        Element * elem = NULL;
+
+        // Si la position est plus proche de la tete on rentre par la tete
+        if(position < (liste->taille / 2))
+        {
+            elem = liste->tete;
+
+            for (int i = 0; i < position; i++)
+            {
+                elem = elem->suivant;
+            }
+            
+            return elem;
+        }
+        // Si la position est plus proche de la queue on rentre par la queue
+        else
+        {
+            elem = liste->queue;
+
+            for (int i = (liste->taille - 1); i > position; i--)
+            {
+                elem = elem->precedent;
+            }
+            
+            return elem;
+        }
+    }
+}
+
+Voiture recupTeteListe(const_Liste liste)
+{
+    return liste->tete->voiture;
+}
+
+Voiture recupQueueListe(const_Liste liste)
+{
+    return liste->queue->voiture;
+}
+
+Voiture recupPosListe(const_Liste liste, int position)
+{      
+    myassert(position >= 0, "La position doit etre positive");
+    myassert(position < liste->taille, "La position ne doit pas etre plus grande que la taille de la liste");
+
+    // Si la position correspond a la tete de la liste
+    if (position  == 0)
+    {
+        recupTeteListe(liste);
+    }
+    // Si la position correspond a la queue de la liste
+    else if (position == liste->taille)
+    {
+        recupQueueListe(liste);
+    }
+    // Si la position correspond ni a la tete ni a la queue
+    else
+    {
+        Element * elem = recupElemPosListe(liste, position);
+
+        return elem->voiture;
+    }
 }
 
 
 /*------------------------------*
  * Fonctions ajout d'un element
  *------------------------------*/
+
+void ajouterListeVide(Liste liste, Element * elem)
+{
+    // Pas de suivant ni précédent
+    elem->precedent = NULL;
+    elem->suivant = NULL;
+
+    // La tete et la queue sont le nouveau element
+    liste->tete = (Element *) malloc(sizeof(struct element));
+    liste->queue = (Element *) malloc(sizeof(struct element));
+    liste->tete = elem;
+    liste->queue = elem;
+}
 
 void ajouterTeteListe(Liste liste, Voiture voiture)
 {
@@ -207,42 +306,13 @@ void ajouterPosListe(Liste liste, Voiture voiture, int position)
     // Si la position correspond ni a la tete ni a la queue
     else
     {
-        // Nouvel element à ajouter
+        // Nouvel element a ajouter
         Element * elem = (Element *) malloc(sizeof(struct element));
         elem->voiture = voiture;
 
         // On stocke le futur precedent et le futur suivant de l'element a ajouter
-        Element * suiv;
-        Element * prec;
-
-        // Si la position est plus proche de la tete on rentre par la tete
-        if(position < (liste->taille / 2))
-        {
-            // On prend la tete de la liste
-            suiv = liste->tete->suivant;
-            prec = liste->tete;
-
-            // On parcours la liste pour avoir le futur precedent et le futur suivant de l'element a ajouter
-            for (int i = 1; i < position; i++)
-            {
-                suiv = suiv->suivant;
-                prec = suiv->precedent;
-            }
-        }
-        // Si la position est plus proche de la queue on rentre par la queue
-        else
-        {
-            // On prend la queue de la liste
-            suiv = liste->queue;
-            prec = liste->queue->precedent;
-
-            // On parcours la liste pour avoir le futur precedent et le futur suivant de l'element a ajouter
-            for (int i = 1; i <= (liste->taille - position); i++)
-            {
-                prec = prec->precedent;
-                suiv = prec->suivant;
-            }
-        }
+        Element * suiv = recupElemPosListe(liste, position);
+        Element * prec = suiv->precedent;
 
         // On met l'element precedent et suivant dans le nouveau element
         elem->precedent = (Element *) malloc(sizeof(struct element));
@@ -260,19 +330,6 @@ void ajouterPosListe(Liste liste, Voiture voiture, int position)
     }
 }
 
-void ajouterListeVide(Liste liste, Element * elem)
-{
-    // Pas de suivant ni précédent
-    elem->precedent = NULL;
-    elem->suivant = NULL;
-
-    // La tete et la queue sont le nouveau element
-    liste->tete = (Element *) malloc(sizeof(struct element));
-    liste->queue = (Element *) malloc(sizeof(struct element));
-    liste->tete = elem;
-    liste->queue = elem;
-}
-
 
 /*------------------------------------*
  * Fonctions suppression d'un element
@@ -283,66 +340,6 @@ void supprimerTeteListe(Liste liste);
 void supprimerQueueListe(Liste liste);
 
 void supprimerPosListe(Liste liste, int position);
-
-
-/*------------------------------------*
- * Fonctions récupération d'un element
- *------------------------------------*/
-
-Voiture recupTeteListe(const_Liste liste)
-{
-    return liste->tete->voiture;
-}
-
-Voiture recupQueueListe(const_Liste liste)
-{
-    return liste->queue->voiture;
-}
-
-Voiture recupPosListe(Liste liste, int position)
-{      
-    myassert(position >= 0, "La position doit etre positive");
-    myassert(position <= liste->taille, "La position ne doit pas etre plus grande que la taille de la liste");
-
-    // Si la position correspond a la tete de la liste
-    if (position  == 0)
-    {
-        recupTeteListe(liste);
-    }
-    // Si la position correspond a la queue de la liste
-    else if (position == liste->taille)
-    {
-        recupQueueListe(liste);
-    }
-    // Si la position correspond ni a la tete ni a la queue
-    else
-    {
-        Element * elem;
-
-        // Si la position est plus proche de la tete on rentre par la tete
-        if(position < (liste->taille / 2))
-        {
-            elem = liste->tete;
-
-            for (int i = 1; i < position; i++)
-            {
-                elem = elem->suivant;
-            }
-        }
-        // Si la position est plus proche de la queue on rentre par la queue
-        else
-        {
-            elem = liste->queue;
-
-            for (int i = 1; i <= (liste->taille - position); i++)
-            {
-                elem = elem->precedent;
-            }
-        }
-
-        return elem->voiture;
-    }
-}
 
 
 /*---------------------------*

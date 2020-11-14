@@ -50,24 +50,24 @@ int main()
     // ajouterQueueListe(mylist, v6);
     // ajouterQueueListe(mylist, v7);
 
-    /*-----------------------------------------------------
-     * Test ajouterPosListe (ne marche pas pour l'instant)
-     *----------------------------------------------------*/
-    // ajouterPosListe(mylist, v1, 0);
-    // ajouterPosListe(mylist, v7, 1);
-    // ajouterPosListe(mylist, v2, 1);
-    // ajouterPosListe(mylist, v3, 2);
-    // ajouterPosListe(mylist, v6, 3);
-    // ajouterPosListe(mylist, v4, 3);
-    // ajouterPosListe(mylist, v5, 4);
+    /*----------------------
+     * Test ajouterPosListe
+     *---------------------*/
+    ajouterPosListe(mylist, v1, 0);
+    ajouterPosListe(mylist, v7, 1);
+    ajouterPosListe(mylist, v2, 1);
+    ajouterPosListe(mylist, v3, 2);
+    ajouterPosListe(mylist, v6, 3);
+    ajouterPosListe(mylist, v4, 3);
+    ajouterPosListe(mylist, v5, 4);
 
+    voi_afficher(recupPosListe(mylist, 0));
     voi_afficher(recupPosListe(mylist, 1));
     voi_afficher(recupPosListe(mylist, 2));
     voi_afficher(recupPosListe(mylist, 3));
     voi_afficher(recupPosListe(mylist, 4));
     voi_afficher(recupPosListe(mylist, 5));
     voi_afficher(recupPosListe(mylist, 6));
-    voi_afficher(recupPosListe(mylist, 7));
 
     //detruireListe(&mylist);
 
