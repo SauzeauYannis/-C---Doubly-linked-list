@@ -567,7 +567,7 @@ void col_supprVoitureSansTri(Collection self, int pos)
 void col_supprVoitureAvecTri(Collection self, int pos)
 {
     myassert(self->listeVoitures != NULL, "La liste ne doit pas être vide");
-    myassert(self->estTriee == true, "la liste doit être trié");
+    myassert(self->estTriee == true, "La liste doit être trié");
 
     supprimerPosListe(self->listeVoitures, pos);    
 }
@@ -583,10 +583,9 @@ void col_afficher(const_Collection self)
 {
     myassert(self->listeVoitures != NULL, "La liste ne doit pas être vide");
     
-    int size = self->listeVoitures->taille;
-    for(int i=size; i<size-1; i++)
+    for(int i = 0; i < self->listeVoitures->taille; i++)
     {
-        voi_afficher(recupElemPosListe(self, i));
+        voi_afficher(recupPosListe(self->listeVoitures, i));
     }
 }
 
