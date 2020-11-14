@@ -53,28 +53,25 @@ int main()
     /*----------------------
      * Test ajouterPosListe
      *---------------------*/
-    ajouterPosListe(mylist, v1, 0);
-    ajouterPosListe(mylist, v7, 1);
-    ajouterPosListe(mylist, v2, 1);
-    ajouterPosListe(mylist, v3, 2);
-    ajouterPosListe(mylist, v6, 3);
-    ajouterPosListe(mylist, v4, 3);
-    ajouterPosListe(mylist, v5, 4);
-<<<<<<< HEAD
+    // ajouterPosListe(mylist, v1, 0);
+    // ajouterPosListe(mylist, v7, 1);
+    // ajouterPosListe(mylist, v2, 1);
+    // ajouterPosListe(mylist, v3, 2);
+    // ajouterPosListe(mylist, v6, 3);
+    // ajouterPosListe(mylist, v4, 3);
+    // //ajouterPosListe(mylist, v5, 4);
 
-    viderListe(&mylist);
-=======
->>>>>>> e6f42170c48358c4a3662ee534fbd608dd5d8379
+    viderListe(mylist);
 
-    voi_afficher(recupPosListe(mylist, 0));
-    voi_afficher(recupPosListe(mylist, 1));
-    voi_afficher(recupPosListe(mylist, 2));
-    voi_afficher(recupPosListe(mylist, 3));
-    voi_afficher(recupPosListe(mylist, 4));
-    voi_afficher(recupPosListe(mylist, 5));
-    voi_afficher(recupPosListe(mylist, 6));
+    // voi_afficher(recupPosListe(mylist, 0));
+    // voi_afficher(recupPosListe(mylist, 1));
+    // voi_afficher(recupPosListe(mylist, 2));
+    // voi_afficher(recupPosListe(mylist, 3));
+    // voi_afficher(recupPosListe(mylist, 4));
+    // voi_afficher(recupPosListe(mylist, 5));
+    // voi_afficher(recupPosListe(mylist, 6));
 
-    //detruireListe(&mylist);
+    detruireListe(&mylist);
 
     return EXIT_SUCCESS;
 }
