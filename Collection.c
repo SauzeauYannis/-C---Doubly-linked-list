@@ -62,37 +62,25 @@ void detruireListe(Liste * liste)
 {
     if((*liste) != NULL)
     {
-        while((*liste)->tete->suivant != NULL)
+        while((*liste)->tete != NULL)
         {
             Element* suiv = (*liste)->tete->suivant;
-            printf("test1\n");
 
             // On détruit et libère la mémoire de la voiture de l'élément de la tête
             voi_detruire(&((*liste)->tete->voiture));
-            printf("test2\n");
-            
             free((*liste)->tete->voiture);
-            printf("test3\n");
 
-            // On libère les éléments suivants et précédents
+            // On libère l'élément et précédents
             free((*liste)->tete->precedent);
-            printf("testpred\n");
-
-            free((*liste)->tete->suivant);
-            printf("testsuiv\n");
-                        
+                         
             // On pointe le prochain élément sur la tête
             (*liste)->tete = suiv;
-            printf("test6\n");
         }
         
         // On libère la mémoire de la liste
         free((*liste)->tete);
-        printf("test7\n");
         free((*liste)->queue);
-        printf("test8\n");
-        free(*liste);
-        printf("test9\n");
+        free(*liste););
         
     } else {
         myassert((*liste) == NULL, "La liste est nulle");        
