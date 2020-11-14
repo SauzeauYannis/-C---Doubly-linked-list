@@ -489,7 +489,7 @@ Voiture col_getVoiture(const_Collection self, int pos)
     myassert(pos >= 0, "La position doit etre positive");
     myassert(pos < self->listeVoitures->taille, "La position ne doit pas etre plus grande que la taille de la liste");
 
-    return recupPosListe(self->listeVoitures, pos);
+    return voi_creerCopie(recupPosListe(self->listeVoitures, pos));
 }
 
 void col_addVoitureSansTri(Collection self, const_Voiture voiture)
