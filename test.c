@@ -124,16 +124,6 @@ int main()
 
     Collection mycol = col_creer();
 
-<<<<<<< HEAD
-    printf("nb voitures : %d\n", col_getNbVoitures(mycol));
-    Voiture v = col_getVoiture(mycol, 0);
-
-    col_afficher(mycol);
-    
-    col_vider(mycol);
-
-    col_detruire(&mycol);
-=======
     /*-----------------------------
      * Test col_addVoitureSansTri
      *----------------------------*/
@@ -181,7 +171,6 @@ int main()
     voi_detruire(&v5);
     voi_detruire(&v6);
     voi_detruire(&v7);
->>>>>>> 60ff58eec9620d59a4a49ccdf2c42d61b45d1236
 
     return EXIT_SUCCESS;
 }
