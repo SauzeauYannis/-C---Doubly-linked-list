@@ -103,6 +103,8 @@ void viderListe(Liste liste)
             // On pointe le prochain élément sur la tête
             liste->tete = suiv;
         }
+    // On libère le dernier élément de la queue
+    free(liste->queue);
     liste->tete = NULL;
     liste->queue = NULL;
     liste->taille = 0;
@@ -323,7 +325,9 @@ void ajouterPosListe(Liste liste, Voiture voiture, int position)
 
 void supprimerTeteListe(Liste liste)
 {
-    myassert(estVideListe(liste), "la liste est vide 'supprimerTeteListe' ne peut pas supprimer")
+    myassert(estVideListe(liste), "la liste est vide 'supprimerTeteListe' ne peut pas supprimer");
+
+
 }
 
 void supprimerQueueListe(Liste liste);
