@@ -37,7 +37,7 @@ int main()
     voi_afficher(recupPosListe(mylist, 1));
     voi_afficher(recupPosListe(mylist, 2));
 
-    //detruireListe(&mylist);
+    detruireListe(&mylist);
 
     return EXIT_SUCCESS;
 }
