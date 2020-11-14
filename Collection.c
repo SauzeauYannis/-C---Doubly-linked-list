@@ -329,82 +329,90 @@ void supprimerTeteListe(Liste liste)
 {
     myassert(!estVideListe(liste), "supprimerTeteListe : la liste est vide");
 
-    Element* suiv = liste->tete->suivant;
+    if(liste->taille == 1)
+    {
+        viderListe(liste);
+    }
+    else
+    {
+       Element* suiv = liste->tete->suivant;
 
-    // On détruit et libère la mémoire de la voiture de l'élément de la tête
-    voi_detruire(&(liste->tete->voiture));
-    free(liste->tete->voiture);
+        // On détruit et libère la mémoire de la voiture de l'élément de la tête
+        voi_detruire(&(liste->tete->voiture));
+        free(liste->tete->voiture);
 
-    // On libère l'élément précédent
-    free(liste->tete->precedent);
-    liste->tete->suivant = NULL;
+        // On libère la tête courante de la liste
+        free(liste->tete);
     
-    // On libère la tête courante de la liste
-    free(liste->tete);
-    
-    // On pointe le prochain élément sur la tête de la liste
-    liste->taille--;
-    liste->tete = suiv;
-    liste->tete->precedent = NULL;
+        // On pointe le prochain élément sur la tête de la liste
+        liste->taille--;
+        liste->tete = suiv;
+        liste->tete->precedent = NULL;
+    }
 }
 
 void supprimerQueueListe(Liste liste)
 {
-    myassert(liste != NULL, "supprimerTeteListe : la liste est vide");
+    myassert(!estVideListe(liste), "supprimerQueueListe : la liste est vide");
 
-    Element* pred = liste->queue->precedent;
+    if(liste->taille == 1)
+    {
+        viderListe(liste);
+    }
+    else 
+    {
+        Element* pred = liste->queue->precedent;
     
-    // On détruit et libère la mémoire de la voiture de l'élément de la queue
-    voi_detruire(&(liste->queue->voiture));
-    free(liste->queue->voiture);
-
-    // On libère l'élément suivant
-    free(liste->queue->suivant);
+        // On détruit et libère la mémoire de la voiture de l'élément de la queue
+        voi_detruire(&(liste->queue->voiture));
+        free(liste->queue->voiture);
     
-    // On libère la queue courante de la liste
-    free(liste->queue);
+        // On libère la queue courante de la liste
+        free(liste->queue);
 
-    // On pointe le prochain élément sur la tête de la liste
-    liste->taille--;
-    liste->queue = pred;
-    liste->queue->suivant = NULL;
+        // On pointe le prochain élément sur la tête de la liste
+        liste->taille--;
+        liste->queue = pred;
+        liste->queue->suivant = NULL;
+    }
 }
 
 void supprimerPosListe(Liste liste, int position)
 {
-    myassert(liste->taille > 0, "la taille de la liste doit être strictement supérieur à 0");
+    myassert(liste->taille > 0, "supprimerPosListe : la taille de la liste doit être strictement supérieur à 0");
 
         Element* elem = recupElemPosListe(liste, position);
         Element* suiv = elem->suivant;
         Element* pred = elem->precedent;
  
         // On pointe les bonnes valeurs pour les suivants et précédents
-        if(liste->taille == 1)
+
+        if(position == 0)
         {
-            liste->tete = NULL;
-            liste->queue = NULL;
-        }
-        else if(position == 0)
-        {
-            elem->suivant->precedent = NULL; 
-            liste->tete = elem->suivant;  
+            supprimerTeteListe(liste); 
         }
         else if(position == liste->taille-1)
         {
-            elem->precedent->suivant = NULL;
-            liste->queue = elem->precedent;     
-        } else
+            supprimerQueueListe(liste);  
+        } 
+        else if(liste->taille == 1)
+        {
+            viderListe(liste);
+        } 
+        else
         {
             elem->suivant->precedent = pred;
             elem->precedent->suivant = suiv;
-        }
-        // On détruit la voiture de l'élément à la position donné
-        voi_detruire(&(elem->voiture));
-        free(elem->voiture);
+         
+            // On détruit la voiture de l'élément à la position donné
+            voi_detruire(&(elem->voiture));
+            free(elem->voiture);
 
-        // On libère l'élément de la position courante
-        free(elem);        
-        liste->taille--;
+            // On libère l'élément de la position courante
+            free(elem);        
+            liste->taille--;
+        
+        }
 }
 
 
