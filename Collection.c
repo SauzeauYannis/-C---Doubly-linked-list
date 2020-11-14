@@ -87,7 +87,7 @@ void supprimerPosListe(Liste liste, int position);
  * Fonctions récupération d'un element
  *------------------------------------*/
 
-Voiture recupTeteListe(Liste liste);
+Voiture recupTeteListe(const_Liste liste)
 
 Voiture recupQueueListe(Liste liste);
 
