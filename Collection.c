@@ -113,11 +113,87 @@ bool estVideListe(Liste liste)
  * Fonctions ajout d'un element
  *------------------------------*/
 
-void ajouterTeteListe(Liste liste, Voiture voiture);
+void ajouterTeteListe(Liste liste, Voiture voiture)
+{
+    // Nouvel element à ajouter
+    Element * elem = (Element *) malloc(sizeof(struct element));
+    elem->voiture = voiture;
 
-void ajouterQueueListe(Liste liste, Voiture voiture);
+    // Si il n'y a pas d'element dans la liste
+    if (estVideListe(liste))
+    {
+        ajouterListeVide(liste, elem);
+    }
+    // Si il y a déjà des elements dans la liste
+    else
+    {
+        // L'ancienne tete a l'elem en precedent
 
-void ajouterPosListe(Liste liste, Voiture voiture, int position);
+
+        // Suivant est l'ancienne tete et pas de precedent
+        elem->suivant = (Element *) malloc(sizeof(struct element));
+        elem->suivant = liste->tete;
+        elem->precedent = NULL;
+
+        // Seule la tete change
+        liste->tete = elem;
+    }
+    
+    liste->taille++;
+}
+
+void ajouterQueueListe(Liste liste, Voiture voiture)
+{
+    // Nouvel element à ajouter
+
+    Element * elem = (Element *) malloc(sizeof(struct element));
+
+    // Si il n'y a pas d'element dans la liste
+    if (estVideListe(liste))
+    {
+        ajouterListeVide(liste, elem);
+    }
+    // Si il y a déjà des elements dans la liste
+    else
+    {
+
+    }
+    
+    liste->taille++;
+}
+
+void ajouterPosListe(Liste liste, Voiture voiture, int position)
+{
+    // Nouvel element à ajouter
+
+    Element * elem = (Element *) malloc(sizeof(struct element));
+
+    // Si il n'y a pas d'element dans la liste
+    if (estVideListe(liste))
+    {
+        ajouterListeVide(liste, elem);
+    }
+    // Si il y a déjà des elements dans la liste
+    else
+    {
+
+    }
+    
+    liste->taille++;
+}
+
+void ajouterListeVide(Liste liste, Element * elem)
+{
+    // Pas de suivant ni précédent
+    elem->precedent = NULL;
+    elem->suivant = NULL;
+
+    // La tete et la queue sont le nouveau element
+    liste->tete = (Element *) malloc(sizeof(struct element));
+    liste->queue = (Element *) malloc(sizeof(struct element));
+    liste->tete = elem;
+    liste->queue = elem;
+}
 
 
 /*------------------------------------*
@@ -136,10 +212,19 @@ void supprimerPosListe(Liste liste, int position);
  *------------------------------------*/
 
 Voiture recupTeteListe(const_Liste liste)
+{
+    
+}
 
-Voiture recupQueueListe(const_Liste liste);
+Voiture recupQueueListe(const_Liste liste)
+{
+    
+}
 
-Voiture recupPosListe(Liste liste, int position);
+Voiture recupPosListe(Liste liste, int position)
+{
+    
+}
 
 
 /*---------------------------*
