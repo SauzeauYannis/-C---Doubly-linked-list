@@ -533,7 +533,7 @@ void col_addVoitureAvecTri(Collection self, const_Voiture voiture)
     {
         // Creer une copie de voiture pour l'ajouter a la liste
         Voiture v = voi_creerCopie(voiture);
-        
+
         // Initialisation de la voiture sur l'elemennt en tete de liste pour pouvoir comparer les annnes
         Voiture vParcourue = recupTeteListe(self->listeVoitures);
         int i = 0;
@@ -550,9 +550,9 @@ void col_addVoitureAvecTri(Collection self, const_Voiture voiture)
             {
                 break;
             }
-    }
+        }
 
-    ajouterPosListe(self->listeVoitures, v, i);
+        ajouterPosListe(self->listeVoitures, v, i);
     }
 }
 
