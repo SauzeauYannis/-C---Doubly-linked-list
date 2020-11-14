@@ -582,11 +582,29 @@ void col_trier(Collection self);
 void col_afficher(const_Collection self)
 {
     myassert(self->listeVoitures != NULL, "La liste ne doit pas être vide");
+
+    int size = self->listeVoitures->taille;
+
+    printf("[************* COLLECTION **************]\n");
+    printf("[**** La collection contient %d voitures\n", size);
     
-    for(int i = 0; i < self->listeVoitures->taille; i++)
+    if(self->estTriee)
     {
-        voi_afficher(recupPosListe(self->listeVoitures, i));
+        printf("[**** La collection est triée\n");
+    } else
+    {
+        printf("[**** La collection n'est pas triée\n");
     }
+    
+    for(int i = 0; i < size; i++)
+    {
+        printf("---------------------------\n");
+        printf("Voiture %d : \n", i);
+        voi_afficher(recupPosListe(self->listeVoitures, i));
+        printf("---------------------------\n");
+    }
+
+    printf("[************* FIN AFFICHAGE COLLECTION **************]\n");
 }
 
 
