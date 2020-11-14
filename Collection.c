@@ -86,27 +86,30 @@ void detruireListe(Liste * liste)
 
 void viderListe(Liste liste)
 {
-    while(liste->tete != NULL)
-        {
-            Element* suiv = liste->tete->suivant;
+    if(liste != NULL)
+    {
+        while(liste->tete != NULL)
+            {
+                Element* suiv = liste->tete->suivant;
 
-            // On détruit et libère la mémoire de la voiture de l'élément de la tête
-            voi_detruire(&(liste->tete->voiture));
-            free(liste->tete->voiture);
+                // On détruit et libère la mémoire de la voiture de l'élément de la tête
+                voi_detruire(&(liste->tete->voiture));
+                free(liste->tete->voiture);
 
-            // On libère l'élément et précédents
-            free(liste->tete->precedent);
-                         
-            // On pointe le prochain élément sur la tête
-            liste->tete = suiv;
-        }
-    // On libère le dernier élément de la queue
-    free(liste->queue);
+                // On libère l'élément et précédents
+                free(liste->tete->precedent);
 
-    // On réinitialise les valeurs de la liste
-    liste->tete = NULL;
-    liste->queue = NULL;
-    liste->taille = 0;
+               // On pointe le prochain élément sur la tête
+                liste->tete = suiv;
+            }
+        // On libère le dernier élément de la queue
+        free(liste->queue);
+
+        // On réinitialise les valeurs de la liste
+        liste->tete = NULL;
+        liste->queue = NULL;
+        liste->taille = 0;
+    }
 }
 
 
@@ -420,22 +423,64 @@ struct CollectionP
  * Fonctions initialisation de la structure
  *------------------------------------------*/
 
-Collection col_creer();
+Collection col_creer()
+{
+    Collection self = (Collection)malloc(sizeof(struct CollectionP));
+    
+    self->estTriee = false;
+    self->listeVoitures = NULL;
 
-Collection col_creerCopie(const_Collection source);
+    return self;
+}
 
-void col_detruire(Collection *pself);
+Collection col_creerCopie(const_Collection source)
+{
+    Collection self = (Collection)malloc(sizeof(struct CollectionP));
 
-void col_vider(Collection self);
+    self->estTriee = source->estTriee;
+    
+    int size = source->listeVoitures->taille;
+    for(int i=0; i<size; i++)
+    {   
+        // On récupère chaque voiture à la position courante
+        Voiture v = recupPosListe(source, i);
+        // Puis on l'ajoute à la queue de la liste
+        ajouterQueueListe(self, voi_creerCopie(v));
+    }
+
+    return self;
+}
+
+void col_detruire(Collection *pself)
+{
+    detruireListe(&((*pself)->listeVoitures));
+    free(*pself);
+}
+
+void col_vider(Collection self)
+{
+    viderListe(self->listeVoitures);
+    self->estTriee = false;
+}
 
 
 /*------------------------*
  * Focntions d'accesseurs
  *------------------------*/
 
-int col_getNbVoitures(const_Collection self);
+int col_getNbVoitures(const_Collection self)
+{
+    myassert(self->listeVoitures != NULL, "col_getNbvoitures : la liste ne doit pas être vide");
 
-Voiture col_getVoiture(const_Collection self, int pos);
+    return self->listeVoitures->taille;
+}
+
+Voiture col_getVoiture(const_Collection self, int pos)
+{
+    myassert(self->listeVoitures != NULL, "col_getVoiture : la liste ne doit pas être vide");
+
+    return recupPosListe(self, pos);
+}
 
 void col_addVoitureSansTri(Collection self, const_Voiture voiture);
 

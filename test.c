@@ -79,13 +79,13 @@ int main()
      * Test Suppression
      *---------------------*/
 
-    supprimerTeteListe(mylist);
-    supprimerQueueListe(mylist);
-    supprimerPosListe(mylist, 0);
-    supprimerPosListe(mylist, 3);
-    supprimerPosListe(mylist, 1);  
-    supprimerPosListe(mylist, 1);
-    supprimerPosListe(mylist, 0);
+    // supprimerTeteListe(mylist);
+    // supprimerQueueListe(mylist);
+    // supprimerPosListe(mylist, 0);
+    // supprimerPosListe(mylist, 3);
+    // supprimerPosListe(mylist, 1);  
+    // supprimerPosListe(mylist, 1);
+    // supprimerPosListe(mylist, 0);
 
     //voi_afficher(recupPosListe(mylist, 0));
     //voi_afficher(recupPosListe(mylist, 1));
@@ -93,7 +93,22 @@ int main()
     //voi_afficher(recupPosListe(mylist, 3));
     //voi_afficher(recupPosListe(mylist, 4));
 
+    // viderListe(mylist);
+
     detruireListe(&mylist);
+
+    /*----------------------
+     * Test Collection
+     *---------------------*/
+
+    Collection mycol = col_creer();
+
+    //printf("nb voitures : %d\n", col_getNbVoitures(mycol));
+    Voiture v =col_getVoiture(mycol, 0);
+    
+    col_vider(mycol);
+
+    col_detruire(&mycol);
 
     return EXIT_SUCCESS;
 }
