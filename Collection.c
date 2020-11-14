@@ -65,7 +65,6 @@ void detruireListe(Liste * liste)
         while((*liste)->tete != NULL)
         {
             Element * suiv = (*liste)->tete->suivant;
-            printf("test1\n");
 
             // On détruit et libère la mémoire de la voiture de l'élément de la tête
             voi_detruire(&((*liste)->tete->voiture));
@@ -73,7 +72,6 @@ void detruireListe(Liste * liste)
 
             // On libère l'élément et précédents
             free((*liste)->tete->precedent);
-            printf("testpred\n");
                         
             // On pointe le prochain élément sur la tête
             (*liste)->tete = suiv;
@@ -105,6 +103,7 @@ void viderListe(Liste * liste)
             // On pointe le prochain élément sur la tête
             (*liste)->tete = suiv;
         }
+    free((*liste)->queue);
     (*liste)->tete = NULL;
     (*liste)->queue = NULL;
     (*liste)->taille = 0;
