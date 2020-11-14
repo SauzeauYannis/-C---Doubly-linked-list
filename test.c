@@ -31,13 +31,13 @@ int main()
 
     ajouterTeteListe(mylist, v1);
     ajouterTeteListe(mylist, v2);
-    ajouterTeteListe(mylist, v3);
-    ajouterTeteListe(mylist, v1);
     ajouterPosListe(mylist, v2, 1);
 
     voi_afficher(recupTeteListe(mylist));
+    voi_afficher(recupPosListe(mylist, 1));
+    voi_afficher(recupPosListe(mylist, 2));
 
-    detruireListe(&mylist);
+    //detruireListe(&mylist);
 
     return EXIT_SUCCESS;
 }
