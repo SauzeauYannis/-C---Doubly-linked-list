@@ -62,34 +62,27 @@ void detruireListe(Liste * liste)
 {
     if((*liste) != NULL)
     {
-        while((*liste)->tete->suivant != NULL)
+        while((*liste)->tete != NULL)
         {
             Element * suiv = (*liste)->tete->suivant;
             printf("test1\n");
 
             // On détruit et libère la mémoire de la voiture de l'élément de la tête
             voi_detruire(&((*liste)->tete->voiture));
-            printf("test2\n");
-            
             free((*liste)->tete->voiture);
-            printf("test3\n");
 
-            // On libère les éléments suivants et précédents
+            // On libère l'élément et précédents
             free((*liste)->tete->precedent);
             printf("testpred\n");
                         
             // On pointe le prochain élément sur la tête
             (*liste)->tete = suiv;
-            printf("test6\n");
         }
         
         // On libère la mémoire de la liste
         free((*liste)->tete);
-        printf("test7\n");
         free((*liste)->queue);
-        printf("test8\n");
         free(*liste);
-        printf("test9\n");
         
     } else {
         myassert((*liste) == NULL, "La liste est nulle");        
@@ -221,8 +214,6 @@ void ajouterListeVide(Liste liste, Element * elem)
     elem->suivant = NULL;
 
     // La tete et la queue sont le nouveau element
-    liste->tete = (Element *) malloc(sizeof(struct element));
-    liste->queue = (Element *) malloc(sizeof(struct element));
     liste->tete = elem;
     liste->queue = elem;
 }
@@ -242,7 +233,6 @@ void ajouterTeteListe(Liste liste, Voiture voiture)
     else
     {
         // Suivant est l'ancienne tete et pas de precedent
-        //elem->suivant = (Element *) malloc(sizeof(struct element));
         elem->suivant = liste->tete;
         elem->precedent = NULL;
 
@@ -271,7 +261,6 @@ void ajouterQueueListe(Liste liste, Voiture voiture)
     else
     {
         // Precedent est l'ancienne queue et pas de suivant
-        //elem->precedent = (Element *) malloc(sizeof(struct element));
         elem->precedent = liste->queue;
         elem->suivant = NULL;
 
@@ -312,8 +301,6 @@ void ajouterPosListe(Liste liste, Voiture voiture, int position)
         Element * prec = suiv->precedent;
 
         // On met l'element precedent et suivant dans le nouveau element
-        //elem->precedent = (Element *) malloc(sizeof(struct element));
-        //elem->suivant = (Element *) malloc(sizeof(struct element));
         elem->precedent = prec;
         elem->suivant = suiv;
 
