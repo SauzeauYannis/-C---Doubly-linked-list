@@ -80,7 +80,7 @@ void detruireListe(Liste * liste)
         // On libère la mémoire de la liste
         free((*liste)->tete);
         free((*liste)->queue);
-        free(*liste););
+        free(*liste);
         
     } else {
         myassert((*liste) == NULL, "La liste est nulle");        
@@ -89,17 +89,21 @@ void detruireListe(Liste * liste)
 
 void viderListe(Liste * liste)
 {
-    while((*liste)->tete->suivant != NULL)
-    {
-        // On détruit et libère la mémoire de la voiture de l'élément de la tête
-        voi_detruire(&(*liste)->tete->voiture);
-        free((*liste)->tete->voiture);
-        // On libère la mémoire de la tête
-        (*liste)->tete = NULL;
-        free((*liste)->tete);
-        // On pointe le prochain élément sur la tête
-        (*liste)->tete = (*liste)->tete->suivant;
-    }
+    while((*liste)->tete != NULL)
+        {
+            Element* suiv = (*liste)->tete->suivant;
+
+            // On détruit et libère la mémoire de la voiture de l'élément de la tête
+            voi_detruire(&((*liste)->tete->voiture));
+            free((*liste)->tete->voiture);
+
+            // On libère l'élément et précédents
+            free((*liste)->tete->precedent);
+                         
+            // On pointe le prochain élément sur la tête
+            (*liste)->tete = suiv;
+        }
+    (*liste)->tete = NULL;
     (*liste)->queue = NULL;
     (*liste)->taille = 0;
 }
