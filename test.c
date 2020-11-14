@@ -14,9 +14,9 @@
 
 int main()
 {
-	Liste mylist = creerListeVide();
-    bool b1 = estVideListe(mylist);
-    printf("%d \n", b1);
+	// Liste mylist = creerListeVide();
+    // bool b1 = estVideListe(mylist);
+    // printf("%d \n", b1);
 
     Voiture v1, v2, v3, v4, v5, v6, v7;
     const char *tmp[2] = {"1234 AE 75", "VH 529 FE"};
@@ -31,6 +31,7 @@ int main()
     /*------------------------
      * Test ajouterTeteListe
      *------------------------*/
+
     // ajouterTeteListe(mylist, v1);
     // ajouterTeteListe(mylist, v2);
     // ajouterTeteListe(mylist, v3);
@@ -42,6 +43,7 @@ int main()
     /*------------------------
      * Test ajouterQueueListe
      *------------------------*/
+
     // ajouterQueueListe(mylist, v1);
     // ajouterQueueListe(mylist, v2);
     // ajouterQueueListe(mylist, v3);
@@ -53,13 +55,14 @@ int main()
     /*----------------------
      * Test ajouterPosListe
      *---------------------*/
-    ajouterPosListe(mylist, v1, 0);
-    ajouterPosListe(mylist, v7, 1);
-    ajouterPosListe(mylist, v2, 1);
-    ajouterPosListe(mylist, v3, 2);
-    ajouterPosListe(mylist, v6, 3);
-    ajouterPosListe(mylist, v4, 3);
-    ajouterPosListe(mylist, v5, 4);
+
+    // ajouterPosListe(mylist, v1, 0);
+    // ajouterPosListe(mylist, v7, 1);
+    // ajouterPosListe(mylist, v2, 1);
+    // ajouterPosListe(mylist, v3, 2);
+    // ajouterPosListe(mylist, v6, 3);
+    // ajouterPosListe(mylist, v4, 3);
+    // ajouterPosListe(mylist, v5, 4);
 
     // viderListe(mylist);
 
@@ -103,19 +106,13 @@ int main()
      * Test supprimerQueueListe
      *-------------------------*/
 
-    supprimerPosListe(mylist, 0);
-    supprimerPosListe(mylist, 2);
-    supprimerPosListe(mylist, 1);
-    supprimerPosListe(mylist, 3);
-    supprimerPosListe(mylist, 1);  
-    supprimerPosListe(mylist, 1);
-    supprimerPosListe(mylist, 0);
-
-    // voi_afficher(recupPosListe(mylist, 0));
-    // voi_afficher(recupPosListe(mylist, 1));
-    // voi_afficher(recupPosListe(mylist, 2));
-    // //voi_afficher(recupPosListe(mylist, 3));
-    //voi_afficher(recupPosListe(mylist, 4));
+    // supprimerPosListe(mylist, 0);
+    // supprimerPosListe(mylist, 2);
+    // supprimerPosListe(mylist, 1);
+    // supprimerPosListe(mylist, 3);
+    // supprimerPosListe(mylist, 1);  
+    // supprimerPosListe(mylist, 1);
+    // supprimerPosListe(mylist, 0);
 
     // viderListe(mylist);
 
@@ -127,6 +124,7 @@ int main()
 
     Collection mycol = col_creer();
 
+<<<<<<< HEAD
     printf("nb voitures : %d\n", col_getNbVoitures(mycol));
     Voiture v = col_getVoiture(mycol, 0);
 
@@ -135,6 +133,55 @@ int main()
     col_vider(mycol);
 
     col_detruire(&mycol);
+=======
+    /*-----------------------------
+     * Test col_addVoitureSansTri
+     *----------------------------*/
+
+    // col_addVoitureSansTri(mycol, v1);
+    // col_addVoitureSansTri(mycol, v2);
+    // col_addVoitureSansTri(mycol, v3);
+    // col_addVoitureSansTri(mycol, v4);
+    // col_addVoitureSansTri(mycol, v5);
+    // col_addVoitureSansTri(mycol, v6);
+    // col_addVoitureSansTri(mycol, v7);
+
+    /*-----------------------------
+     * Test col_addVoitureAvecTri
+     *----------------------------*/
+
+    col_addVoitureAvecTri(mycol, v1);
+    col_addVoitureAvecTri(mycol, v3);
+    col_addVoitureAvecTri(mycol, v7);
+    col_addVoitureAvecTri(mycol, v5);
+    col_addVoitureAvecTri(mycol, v2);
+    col_addVoitureAvecTri(mycol, v4);
+    col_addVoitureAvecTri(mycol, v6);
+
+    /*------------------------
+     * Test col_getVoiture()
+     *-----------------------*/
+
+    voi_afficher(col_getVoiture(mycol, 0));
+    voi_afficher(col_getVoiture(mycol, 1));
+    voi_afficher(col_getVoiture(mycol, 2));
+    voi_afficher(col_getVoiture(mycol, 3));
+    voi_afficher(col_getVoiture(mycol, 4));
+    voi_afficher(col_getVoiture(mycol, 5));
+    voi_afficher(col_getVoiture(mycol, 6));
+    
+    col_vider(mycol);
+
+    col_detruire(&mycol);
+
+    voi_detruire(&v1);
+    voi_detruire(&v2);
+    voi_detruire(&v3);
+    voi_detruire(&v4);
+    voi_detruire(&v5);
+    voi_detruire(&v6);
+    voi_detruire(&v7);
+>>>>>>> 60ff58eec9620d59a4a49ccdf2c42d61b45d1236
 
     return EXIT_SUCCESS;
 }

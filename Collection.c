@@ -413,7 +413,6 @@ void supprimerPosListe(Liste liste, int position)
             // On libère l'élément de la position courante
             free(elem);        
             liste->taille--;
-        
         }
 }
 
@@ -437,7 +436,7 @@ Collection col_creer()
 {
     Collection self = (Collection)malloc(sizeof(struct CollectionP));
     
-    self->estTriee = false;
+    self->estTriee = true;
     self->listeVoitures = NULL;
 
     return self;
@@ -480,7 +479,7 @@ void col_vider(Collection self)
 
 int col_getNbVoitures(const_Collection self)
 {
-    myassert(self->listeVoitures != NULL, "col_getNbvoitures : la liste ne doit pas être vide");
+    myassert(self->listeVoitures != NULL, "La liste ne doit pas être vide");
 
     return self->listeVoitures->taille;
 }
@@ -489,14 +488,73 @@ Voiture col_getVoiture(const_Collection self, int pos)
 {
     myassert(self->listeVoitures != NULL, "La liste ne doit pas être vide");
     myassert(pos >= 0, "La position doit etre positive");
-    myassert(pos <= self->listeVoitures->taille, "La position ne doit pas etre plus grande que la taille de la liste");
+    myassert(pos < self->listeVoitures->taille, "La position ne doit pas etre plus grande que la taille de la liste");
 
     return recupPosListe(self->listeVoitures, pos);
 }
 
-void col_addVoitureSansTri(Collection self, const_Voiture voiture);
+void col_addVoitureSansTri(Collection self, const_Voiture voiture)
+{
+    // Creer une copie de voiture pour l'ajouter a la liste
+    Voiture v = voi_creerCopie(voiture);
 
-void col_addVoitureAvecTri(Collection self, const_Voiture voiture);
+    // Si la liste est null on doit creer une liste vide
+    if (self->listeVoitures == NULL)
+    {
+        self->listeVoitures = creerListeVide();
+    }
+
+    ajouterQueueListe(self->listeVoitures, v);
+
+    // Si la taille est de 1 alors la collection est triee
+    if (self->listeVoitures->taille == 1)
+    {
+        self->estTriee = true;
+    }
+    // Si la taille est differente de 1 alors la collection n'est pas triee
+    else
+    {
+        self->estTriee = false;
+    }
+}
+
+void col_addVoitureAvecTri(Collection self, const_Voiture voiture)
+{
+    myassert(self->estTriee, "La collection doit etre triee");
+
+    // Si la liste est null on doit creer une liste vide et y ajouter la premiere voiture
+    if (self->listeVoitures == NULL)
+    {
+        self->listeVoitures = creerListeVide();
+        col_addVoitureSansTri(self, voiture);
+    }
+    // Si la liste n'est pas vide alors au procede a l'ajout avec tri
+    else
+    {
+        // Creer une copie de voiture pour l'ajouter a la liste
+        Voiture v = voi_creerCopie(voiture);
+        
+        // Initialisation de la voiture sur l'elemennt en tete de liste pour pouvoir comparer les annnes
+        Voiture vParcourue = recupTeteListe(self->listeVoitures);
+        int i = 0;
+
+        // Je parcourt la liste tant que j'ai pas trouvé une voiture plus recente que la voiture a ajouter
+        while (voi_getAnnee(vParcourue) < voi_getAnnee(voiture))
+        {
+            i++;
+            if (i < self->listeVoitures->taille)
+            {
+                vParcourue = recupPosListe(self->listeVoitures, i);
+            }
+            else
+            {
+                break;
+            }
+    }
+
+    ajouterPosListe(self->listeVoitures, v, i);
+    }
+}
 
 void col_supprVoitureSansTri(Collection self, int pos)
 {
