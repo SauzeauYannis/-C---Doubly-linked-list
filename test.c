@@ -19,9 +19,6 @@ int main()
     printf("%d \n", b1);
 
     Voiture v1, v2, v3, v4, v5, v6, v7;
-    char tmpMarque[MAX_LEN+1];
-    char tmpImmatriculation[MAX_LEN+1];
-
     const char *tmp[2] = {"1234 AE 75", "VH 529 FE"};
     v1 = voi_creer("Voiture 1", 2001, 10, 2, tmp);
     v2 = voi_creer("Voiture 2", 2002, 20, 2, tmp);
@@ -72,7 +69,7 @@ int main()
     voi_afficher(recupPosListe(mylist, 6));
     voi_afficher(recupPosListe(mylist, 7));
 
-    detruireListe(&mylist);
+    //detruireListe(&mylist);
 
     return EXIT_SUCCESS;
 }
