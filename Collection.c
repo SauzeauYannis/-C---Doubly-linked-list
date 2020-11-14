@@ -487,20 +487,32 @@ int col_getNbVoitures(const_Collection self)
 
 Voiture col_getVoiture(const_Collection self, int pos)
 {
-    myassert(self->listeVoitures != NULL, "col_getVoiture : la liste ne doit pas être vide");
+    myassert(self->listeVoitures != NULL, "La liste ne doit pas être vide");
     myassert(pos >= 0, "La position doit etre positive");
     myassert(pos <= self->listeVoitures->taille, "La position ne doit pas etre plus grande que la taille de la liste");
 
-    return recupPosListe(self, pos);
+    return recupPosListe(self->listeVoitures, pos);
 }
 
 void col_addVoitureSansTri(Collection self, const_Voiture voiture);
 
 void col_addVoitureAvecTri(Collection self, const_Voiture voiture);
 
-void col_supprVoitureSansTri(Collection self, int pos);
+void col_supprVoitureSansTri(Collection self, int pos)
+{
+    myassert(self->listeVoitures != NULL, "La liste ne doit pas être vide");
+    
+    supprimerPosListe(self->listeVoitures, pos);
+    self->estTriee = false;
+}
 
-void col_supprVoitureAvecTri(Collection self, int pos);
+void col_supprVoitureAvecTri(Collection self, int pos)
+{
+    myassert(self->listeVoitures != NULL, "La liste ne doit pas être vide");
+    myassert(self->estTriee == true, "la liste doit être trié");
+
+    supprimerPosListe(self->listeVoitures, pos);    
+}
 
 void col_trier(Collection self);
 
@@ -509,7 +521,16 @@ void col_trier(Collection self);
  * Fonction d'affichage
  *----------------------*/
 
-void col_afficher(const_Collection self);
+void col_afficher(const_Collection self)
+{
+    myassert(self->listeVoitures != NULL, "La liste ne doit pas être vide");
+    
+    int size = self->listeVoitures->taille;
+    for(int i=size; i<size-1; i++)
+    {
+        voi_afficher(recupElemPosListe(self, i));
+    }
+}
 
 
 /*--------------------------------------*

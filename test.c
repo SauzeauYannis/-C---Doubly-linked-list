@@ -125,14 +125,16 @@ int main()
      * Test Collection
      *---------------------*/
 
-    // Collection mycol = col_creer();
+    Collection mycol = col_creer();
 
-    // printf("nb voitures : %d\n", col_getNbVoitures(mycol));
-    // Voiture v = col_getVoiture(mycol, 0);
+    printf("nb voitures : %d\n", col_getNbVoitures(mycol));
+    Voiture v = col_getVoiture(mycol, 0);
+
+    col_afficher(mycol);
     
-    // col_vider(mycol);
+    col_vider(mycol);
 
-    // col_detruire(&mycol);
+    col_detruire(&mycol);
 
     return EXIT_SUCCESS;
 }
