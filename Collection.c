@@ -89,7 +89,7 @@ void supprimerPosListe(Liste liste, int position);
 
 Voiture recupTeteListe(Liste liste);
 
-Voiture recupQueueListe(Liste liste);
+Voiture recupQueueListe(const_Liste liste);
 
 Voiture recupPosListe(Liste liste, int position);
 
