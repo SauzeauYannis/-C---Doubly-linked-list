@@ -632,12 +632,15 @@ void col_afficher(const_Collection self)
 
 void col_ecrireFichier(const_Collection self, FILE *fd)
 {
-    Collection c = col_creerCopie(self);
-    
-    fwrite(c, sizeof(struct CollectionP), 1, fd);
+    fwrite(&(self->estTriee), sizeof(bool), 1, fd);
+    fwrite(&(self->listeVoitures->taille), sizeof(int), 1, fd);
 
-    free(c);
-
+    int size = self->listeVoitures->taille;
+    for(int i=0; i<size; i++)
+    {
+        const_Voiture v = recupPosListe(self->listeVoitures, i);
+        voi_ecrireFichier(v, fd);
+    }
 }
 
 void col_lireFichier(Collection self, FILE *fd)
