@@ -621,7 +621,7 @@ void col_afficher(const_Collection self)
     if (estVideListe(self->listeVoitures))
     {
         printf("[************* COLLECTION **************]\n");
-        printf("[**** La collection est vide");
+        printf("[**** La collection est vide\n");
         printf("[************* FIN AFFICHAGE COLLECTION **************]\n");
     }
     else
