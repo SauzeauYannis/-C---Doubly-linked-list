@@ -659,6 +659,6 @@ void col_lireFichier(Collection self, FILE *fd)
     for (int i = 0; i < t; i++)
     {
         Voiture v = voi_creerFromFichier(fd);
-        ajouterPosListe(self->listeVoitures, v, i)
+        ajouterPosListe(self->listeVoitures, v, i);
     }
 }
