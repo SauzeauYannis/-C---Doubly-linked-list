@@ -55,7 +55,7 @@ typedef const struct ListeP * const_Liste;
 
 Liste creerListeVide(void)
 {
-    Liste list = (Liste)malloc(sizeof(struct ListeP));
+    Liste list = (Liste) malloc(sizeof(struct ListeP));
 
     list->taille = 0;
     list->tete = NULL;
@@ -70,7 +70,7 @@ void viderListe(Liste liste)
     {
         while(liste->tete != NULL)
             {
-                Element* suiv = liste->tete->suivant;
+                Element * suiv = liste->tete->suivant;
 
                 // On détruit et libère la mémoire de la voiture de l'élément de la tête
                 voi_detruire(&(liste->tete->voiture));
@@ -332,7 +332,7 @@ void supprimerTeteListe(Liste liste)
     else
     {
         // S'il y'a plusieurs éléments dans la liste
-       Element* suiv = liste->tete->suivant;
+       Element * suiv = liste->tete->suivant;
 
         // On détruit et libère la mémoire de la voiture de l'élément de la tête
         voi_detruire(&(liste->tete->voiture));
@@ -432,7 +432,7 @@ struct CollectionP
 
 Collection col_creer()
 {
-    Collection self = (Collection)malloc(sizeof(struct CollectionP));
+    Collection self = (Collection) malloc(sizeof(struct CollectionP));
     
     self->estTriee = true;
     self->listeVoitures = NULL;
@@ -442,7 +442,7 @@ Collection col_creer()
 
 Collection col_creerCopie(const_Collection source)
 {
-    Collection self = (Collection)malloc(sizeof(struct CollectionP));
+    Collection self = (Collection) malloc(sizeof(struct CollectionP));
 
     self->estTriee = source->estTriee;
     self->listeVoitures = creerListeVide();
@@ -550,7 +550,7 @@ void col_addVoitureAvecTri(Collection self, const_Voiture voiture)
                 break;
             }
         }
-        //Puis on l'ajoute à la position trouvé
+        // Puis on l'ajoute à la position trouvé
         ajouterPosListe(self->listeVoitures, v, i);
     }
 }
