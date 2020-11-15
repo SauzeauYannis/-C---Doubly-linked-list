@@ -194,7 +194,7 @@ Voiture recupPosListe(const_Liste liste, int position)
         recupTeteListe(liste);
     }
     // Si la position correspond a la queue de la liste
-    else if (position == liste->taille)
+    else if (position == liste->taille -1)
     {
         recupQueueListe(liste);
     }
@@ -205,7 +205,7 @@ Voiture recupPosListe(const_Liste liste, int position)
 
         return elem->voiture;
     }
-    return NULL;
+    // return NULL; -> cause une erreur de segmentation
 }
 
 
@@ -633,11 +633,15 @@ void col_afficher(const_Collection self)
 
 void col_ecrireFichier(const_Collection self, FILE *fd)
 {
-    printf("a\n");
-    return;
+    Collection c = col_creerCopie(self);
+    
+    fwrite(c, sizeof(struct CollectionP), 1, fd);
+
+    free(c);
+
 }
 
 void col_lireFichier(Collection self, FILE *fd)
 {
-    return;
+    fread(self, sizeof(struct CollectionP), 1, fd);
 }
