@@ -633,6 +633,7 @@ void col_afficher(const_Collection self)
 
 void col_ecrireFichier(const_Collection self, FILE *fd)
 {
+    printf("a\n");
     return;
 }
 
