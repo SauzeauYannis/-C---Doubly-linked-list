@@ -20,6 +20,13 @@
 #include "Collection.h"
 #include "myassert.h"
 
+/*----------*
+ * Macros
+ *----------*/
+
+#define POS_TETE 0
+#define POS_QUEUE(liste) liste->taille - 1
+
 /*-----------------------*
  * Structure de la liste
  *-----------------------*/
@@ -128,20 +135,20 @@ bool estVideListe(Liste liste)
 
 Element * recupElemPosListe(const_Liste liste, int position)
 {
-    myassert(position >= 0, "La position doit etre positive");
-    myassert(position < liste->taille, "La position ne doit pas etre plus grande que la taille de la liste");
+    myassert(position >= POS_TETE, "La position doit etre positive");
+    myassert(position <= POS_QUEUE(liste), "La position ne doit pas etre plus grande que la taille de la liste");
 
-    // Si la position correspond a la tete de la liste
-    if (position  == 0)
+    // Si la position correspond à la tête de la liste
+    if (position  == POS_TETE)
     {
         return liste->tete;
     }
-    // Si la position correspond a la queue de la liste
-    else if (position == (liste->taille - 1))
+    // Si la position correspond à la queue de la liste
+    else if (position == POS_QUEUE(liste))
     {
         return liste->queue;
     }
-    // Si la position correspond ni a la tete ni a la queue
+    // Si la position correspond ni à la tete ni à la queue
     else
     {
         Element * elem = NULL;
@@ -151,7 +158,7 @@ Element * recupElemPosListe(const_Liste liste, int position)
         {
             elem = liste->tete;
 
-            for (int i = 0; i < position; i++)
+            for (int i = POS_TETE; i < position; i++)
             {
                 elem = elem->suivant;
             }
@@ -163,7 +170,7 @@ Element * recupElemPosListe(const_Liste liste, int position)
         {
             elem = liste->queue;
 
-            for (int i = (liste->taille - 1); i > position; i--)
+            for (int i = POS_QUEUE(liste); i > position; i--)
             {
                 elem = elem->precedent;
             }
@@ -185,16 +192,16 @@ Voiture recupQueueListe(const_Liste liste)
 
 Voiture recupPosListe(const_Liste liste, int position)
 {      
-    myassert(position >= 0, "La position doit etre positive");
-    myassert(position < liste->taille, "La position ne doit pas etre plus grande que la taille de la liste");
+    myassert(position >= POS_TETE, "La position doit être positive");
+    myassert(position <= POS_QUEUE(liste), "La position ne doit pas être plus grande que la taille de la liste");
 
     // Si la position correspond a la tete de la liste
-    if (position  == 0)
+    if (position  == POS_TETE)
     {
         return recupTeteListe(liste);
     }
     // Si la position correspond a la queue de la liste
-    else if (position == liste->taille -1)
+    else if (position == POS_QUEUE(liste))
     {
         return recupQueueListe(liste);
     }
@@ -281,16 +288,16 @@ void ajouterQueueListe(Liste liste, Voiture voiture)
 
 void ajouterPosListe(Liste liste, Voiture voiture, int position)
 {
-    myassert(position >= 0, "La position doit etre positive");
-    myassert(position <= liste->taille, "La position ne doit pas etre plus grande que la taille de la liste");
+    myassert(position >= POS_TETE, "La position doit etre positive");
+    myassert(position <= (POS_QUEUE(liste) + 1), "La position ne doit pas etre plus grande que la taille de la liste");
 
     // Si la position correspond a la tete de la liste
-    if (position  == 0)
+    if (position  == POS_TETE)
     {
         ajouterTeteListe(liste, voiture);
     }
     // Si la position correspond a la queue de la liste
-    else if (position == liste->taille)
+    else if (position == (POS_QUEUE(liste) + 1))
     {
         ajouterQueueListe(liste, voiture);
     }
@@ -379,8 +386,8 @@ void supprimerQueueListe(Liste liste)
 void supprimerPosListe(Liste liste, int position)
 {
     myassert(!estVideListe(liste), "la liste est vide");
-    myassert(position >= 0, "La position doit etre positive");
-    myassert(position <= liste->taille, "La position ne doit pas etre plus grande que la taille de la liste");
+    myassert(position >= POS_TETE, "La position doit etre positive");
+    myassert(position <= POS_QUEUE(liste), "La position ne doit pas etre plus grande que la taille de la liste");
 
         Element* elem = recupElemPosListe(liste, position);
         Element* suiv = elem->suivant;
@@ -388,11 +395,11 @@ void supprimerPosListe(Liste liste, int position)
  
         // On pointe les bonnes valeurs pour les suivants et précédents
 
-        if(position == 0)
+        if(position == POS_TETE)
         {
             supprimerTeteListe(liste); 
         }
-        else if(position == liste->taille-1)
+        else if(position == POS_QUEUE(liste))
         {
             supprimerQueueListe(liste);  
         } 
@@ -448,7 +455,7 @@ Collection col_creerCopie(const_Collection source)
     self->estTriee = source->estTriee;
     self->listeVoitures = creerListeVide();
     
-    for(int i = 0; i < source->listeVoitures->taille; i++)
+    for(int i = POS_TETE; i <= POS_QUEUE(self->listeVoitures); i++)
     {   
         // On récupère chaque voiture à la position courante
         Voiture v = recupPosListe(source->listeVoitures, i);
@@ -478,7 +485,7 @@ void col_vider(Collection self)
 
 int col_getNbVoitures(const_Collection self)
 {
-    myassert(self->listeVoitures != NULL, "La liste ne doit pas être vide");
+    myassert(!estVideListe(self->listeVoitures), "La liste ne doit pas être vide");
 
     return self->listeVoitures->taille;
 }
@@ -486,8 +493,8 @@ int col_getNbVoitures(const_Collection self)
 Voiture col_getVoiture(const_Collection self, int pos)
 {
     myassert(self->listeVoitures != NULL, "La liste ne doit pas être vide");
-    myassert(pos >= 0, "La position doit etre positive");
-    myassert(pos < self->listeVoitures->taille, "La position ne doit pas etre plus grande que la taille de la liste");
+    myassert(pos >= POS_TETE, "La position doit etre positive");
+    myassert(pos <= POS_QUEUE(self->listeVoitures), "La position ne doit pas etre plus grande que la taille de la liste");
 
     return voi_creerCopie(recupPosListe(self->listeVoitures, pos));
 }
@@ -535,7 +542,7 @@ void col_addVoitureAvecTri(Collection self, const_Voiture voiture)
 
         // Initialisation de la voiture sur l'elemennt en tete de liste pour pouvoir comparer les annnes
         Voiture vParcourue = recupTeteListe(self->listeVoitures);
-        int i = 0;
+        int i = POS_TETE;
 
         // Je parcourt la liste tant que j'ai pas trouvé une voiture plus recente que la voiture a ajouter
         while (voi_getAnnee(vParcourue) < voi_getAnnee(voiture))
@@ -557,7 +564,7 @@ void col_addVoitureAvecTri(Collection self, const_Voiture voiture)
 
 void col_supprVoitureSansTri(Collection self, int pos)
 {
-    myassert(self->listeVoitures != NULL, "La liste ne doit pas être vide");
+    myassert(!estVideListe(self->listeVoitures), "La liste ne doit pas être vide");
     
     supprimerPosListe(self->listeVoitures, pos);
     self->estTriee = false;
@@ -565,7 +572,7 @@ void col_supprVoitureSansTri(Collection self, int pos)
 
 void col_supprVoitureAvecTri(Collection self, int pos)
 {
-    myassert(self->listeVoitures != NULL, "La liste ne doit pas être vide");
+    myassert(!estVideListe(self->listeVoitures), "La liste ne doit pas être vide");
     myassert(self->estTriee == true, "La liste doit être trié");
 
     supprimerPosListe(self->listeVoitures, pos);    
@@ -573,22 +580,34 @@ void col_supprVoitureAvecTri(Collection self, int pos)
 
 void col_trier(Collection self)
 {
+    // On trie la liste uniquement si elle n'est pas déjà triée
     if (!self->estTriee)
     {
-        for (int i = (self->listeVoitures->taille - 1); i > 0; i--) 
+        // On parcourt de la queue à la tête
+        for (int i = POS_QUEUE(self->listeVoitures); i > POS_TETE; i--) 
         {
+            // On dit suppose que la liste est trié
             self->estTriee = true;
-            for (int j = 0; j < i; j++)
+
+            // On parcourt de la tête jusqu'à l'indice - 1 de la boucle précédente
+            for (int j = POS_TETE; j < i; j++)
             {
+                // On récupère la voiture parcourue et celle qui suit
                 Voiture v = recupPosListe(self->listeVoitures, j);
                 Voiture vSuivant = recupPosListe(self->listeVoitures, j + 1);
 
+                // Si l'année de la voiture suivante est plus petit que l'année 
+                // de la voiture parcourue, alors la liste n'est pas triée
                 if (voi_getAnnee(vSuivant) < voi_getAnnee(v))
                 {
+                    // On échange les deux voitures et on dit donc que la liste
+                    // n'est pas triée
                     voi_swap(v, vSuivant);
                     self->estTriee = false;
                 }
             }
+            // S'il il n'y a pas eu d'échange de voitures alors c'est que la liste
+            // est déjà triée on peut donc arrêté le parcours de la liste
             if (self->estTriee)
             {
                 break;
@@ -604,7 +623,7 @@ void col_trier(Collection self)
 
 void col_afficher(const_Collection self)
 {
-    myassert(self->listeVoitures != NULL, "La liste ne doit pas être vide");
+    myassert(!estVideListe(self->listeVoitures), "La liste ne doit pas être vide");
 
     int size = self->listeVoitures->taille;
 
@@ -619,7 +638,7 @@ void col_afficher(const_Collection self)
         printf("[**** La collection n'est pas triée\n");
     }
     
-    for(int i = 0; i < size; i++)
+    for(int i = POS_TETE; i <= POS_QUEUE(self->listeVoitures); i++)
     {
         printf("---------------------------\n");
         printf("Voiture %d : \n", i);
@@ -640,8 +659,7 @@ void col_ecrireFichier(const_Collection self, FILE *fd)
     fwrite(&(self->estTriee), sizeof(bool), 1, fd);
     fwrite(&(self->listeVoitures->taille), sizeof(int), 1, fd);
 
-    int size = self->listeVoitures->taille;
-    for(int i=0; i<size; i++)
+    for(int i = POS_TETE; i <= POS_QUEUE(self->listeVoitures); i++)
     {
         const_Voiture v = recupPosListe(self->listeVoitures, i);
         voi_ecrireFichier(v, fd);
@@ -661,7 +679,7 @@ void col_lireFichier(Collection self, FILE *fd)
     fread(&t, sizeof(int), 1, fd);
 
     self->listeVoitures = creerListeVide();
-    for (int i = 0; i < t; i++)
+    for (int i = POS_TETE; i < t; i++)
     {
         Voiture v = voi_creerFromFichier(fd);
         ajouterPosListe(self->listeVoitures, v, i);
