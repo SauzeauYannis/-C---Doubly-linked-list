@@ -191,12 +191,12 @@ Voiture recupPosListe(const_Liste liste, int position)
     // Si la position correspond a la tete de la liste
     if (position  == 0)
     {
-        recupTeteListe(liste);
+        return recupTeteListe(liste);
     }
     // Si la position correspond a la queue de la liste
     else if (position == liste->taille -1)
     {
-        recupQueueListe(liste);
+        return recupQueueListe(liste);
     }
     // Si la position correspond ni a la tete ni a la queue
     else
@@ -205,7 +205,6 @@ Voiture recupPosListe(const_Liste liste, int position)
 
         return elem->voiture;
     }
-    // return NULL; -> cause une erreur de segmentation
 }
 
 
@@ -643,5 +642,20 @@ void col_ecrireFichier(const_Collection self, FILE *fd)
 
 void col_lireFichier(Collection self, FILE *fd)
 {
-    fread(self, sizeof(struct CollectionP), 1, fd);
+    // Si la liste n'est pas vide alors on la vide
+    if (self->listeVoitures != NULL)
+    {
+        viderListe(self->listeVoitures);
+    }
+
+    fread(&(self->estTriee), sizeof(bool), 1, fd);
+    int t;
+    fread(&t, sizeof(int), 1, fd);
+
+    self->listeVoitures = creerListeVide();
+    for (int i = 0; i < t; i++)
+    {
+        Voiture v = voi_creerFromFichier(fd);
+        ajouterPosListe(self->listeVoitures, v, i)
+    }
 }
