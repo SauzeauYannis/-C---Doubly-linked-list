@@ -205,6 +205,7 @@ Voiture recupPosListe(const_Liste liste, int position)
 
         return elem->voiture;
     }
+    return NULL;
 }
 
 
