@@ -577,6 +577,7 @@ void col_trier(Collection self)
     {
         for (int i = (self->listeVoitures->taille - 1); i > 0; i--) 
         {
+            self->estTriee = true;
             for (int j = 0; j < i; j++)
             {
                 Voiture v = recupPosListe(self->listeVoitures, j);
@@ -585,10 +586,14 @@ void col_trier(Collection self)
                 if (voi_getAnnee(vSuivant) < voi_getAnnee(v))
                 {
                     voi_swap(v, vSuivant);
+                    self->estTriee = false;
                 }
             }
+            if (self->estTriee)
+            {
+                break;
+            } 
         }
-        self->estTriee = true;
     }
 }
 
