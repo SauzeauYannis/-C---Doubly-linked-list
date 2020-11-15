@@ -57,32 +57,6 @@ Liste creerListeVide(void)
     return list;
 }
 
-void detruireListe(Liste * liste)
-{
-    if((*liste) != NULL)
-    {
-        while((*liste)->tete != NULL)
-        {
-            Element * suiv = (*liste)->tete->suivant;
-
-            // On détruit et libère la mémoire de la voiture de l'élément de la tête
-            voi_detruire(&((*liste)->tete->voiture));
-            free((*liste)->tete->voiture);
-
-            // On libère l'élément et précédents
-            free((*liste)->tete->precedent);
-                        
-            // On pointe le prochain élément sur la tête
-            (*liste)->tete = suiv;
-        }
-        
-        // On libère la mémoire de la liste
-        free((*liste)->tete);
-        free((*liste)->queue);
-        free(*liste);  
-    }
-}
-
 void viderListe(Liste liste)
 {
     if(liste != NULL)
@@ -95,7 +69,7 @@ void viderListe(Liste liste)
                 voi_detruire(&(liste->tete->voiture));
                 free(liste->tete->voiture);
 
-                // On libère l'élément et précédents
+                // On libère l'élément précédent
                 free(liste->tete->precedent);
 
                // On pointe le prochain élément sur la tête
@@ -111,6 +85,19 @@ void viderListe(Liste liste)
     }
 }
 
+void detruireListe(Liste * liste)
+{
+    if((*liste) != NULL)
+    {
+        // On vide la liste
+        viderListe(*liste);
+        
+        // Puis on libère la mémoire de la liste
+        free((*liste)->tete);
+        free((*liste)->queue);
+        free(*liste);  
+    }
+}
 
 /*------------------------------------*
  * Fonctions vérification de la liste
@@ -118,6 +105,7 @@ void viderListe(Liste liste)
 
 bool estVideListe(Liste liste)
 {
+    // On vérifie si la taille est nulle et si la tete et la queue sont nulles
     return (liste->taille == 0) && (liste->tete == NULL) && (liste->queue == NULL);
 }
 
@@ -214,11 +202,12 @@ Voiture recupPosListe(const_Liste liste, int position)
 
 void ajouterListeVide(Liste liste, Element * elem)
 {
-    // Pas de suivant ni précédent
+    // On ajoute un seul et unique élément quand la liste est vide
+    // l'élément n'a pas de suivant ni de précédent
     elem->precedent = NULL;
     elem->suivant = NULL;
 
-    // La tete et la queue sont le nouveau element
+    // Le nouvel élément est la tete et la queue de la liste 
     liste->tete = elem;
     liste->queue = elem;
 }
@@ -237,11 +226,11 @@ void ajouterTeteListe(Liste liste, Voiture voiture)
     // Si il y a déjà des elements dans la liste
     else
     {
-        // Suivant est l'ancienne tete et pas de precedent
+        // Le suivant est l'ancienne tete et n'a pas de precedent
         elem->suivant = liste->tete;
         elem->precedent = NULL;
 
-        // L'ancienne tete a la nouvelle tete en precedent
+        // L'ancienne tete a la nouvelle tete en précédent
         (liste->tete)->precedent = elem;
 
         // Seule la tete change
@@ -262,14 +251,14 @@ void ajouterQueueListe(Liste liste, Voiture voiture)
     {
         ajouterListeVide(liste, elem);
     }
-    // Si il y a deja des elements dans la liste
+    // Si il y a déjà des elements dans la liste
     else
     {
-        // Precedent est l'ancienne queue et pas de suivant
+        // L'élément précédent est l'ancienne queue et n'a pas de suivant
         elem->precedent = liste->queue;
         elem->suivant = NULL;
 
-        // L'ancienne queue a la nouvelle queue en suivant
+        // L'ancienne queue à la nouvelle queue en suivant
         (liste->queue)->suivant = elem;
 
         // Seule la queue change
@@ -309,10 +298,10 @@ void ajouterPosListe(Liste liste, Voiture voiture, int position)
         elem->precedent = prec;
         elem->suivant = suiv;
 
-        // On met a jour le suivant du precedent de l'element qui a ete ajoute
+        // On met à jour le suivant du precedent de l'element qui a ete ajoute
         prec->suivant = elem;
 
-        // On met a jour le precedent du suivant de l'element qui a ete ajoute
+        // On met à jour le precedent du suivant de l'element qui a ete ajoute
         suiv->precedent = elem;
     
         liste->taille++;
@@ -328,12 +317,14 @@ void supprimerTeteListe(Liste liste)
 {
     myassert(!estVideListe(liste), "la liste est vide");
 
+    // S'il n'ya qu'un élément dans la liste, on la vide
     if(liste->taille == 1)
     {
         viderListe(liste);
     }
     else
     {
+        // S'il y'a plusieurs éléments dans la liste
        Element* suiv = liste->tete->suivant;
 
         // On détruit et libère la mémoire de la voiture de l'élément de la tête
@@ -354,12 +345,14 @@ void supprimerQueueListe(Liste liste)
 {
     myassert(!estVideListe(liste), "la liste est vide");
 
+    // S'il n'ya qu'un élément dans la liste, on la vide
     if(liste->taille == 1)
     {
         viderListe(liste);
     }
     else 
     {
+        // S'il y'a plusieurs éléments dans la liste
         Element* pred = liste->queue->precedent;
     
         // On détruit et libère la mémoire de la voiture de l'élément de la queue
@@ -382,37 +375,40 @@ void supprimerPosListe(Liste liste, int position)
     myassert(position >= 0, "La position doit etre positive");
     myassert(position <= liste->taille, "La position ne doit pas etre plus grande que la taille de la liste");
 
-        Element* elem = recupElemPosListe(liste, position);
-        Element* suiv = elem->suivant;
-        Element* pred = elem->precedent;
+    Element* elem = recupElemPosListe(liste, position);
+    Element* suiv = elem->suivant;
+    Element* pred = elem->precedent;
  
-        // On pointe les bonnes valeurs pour les suivants et précédents
 
-        if(position == 0)
-        {
-            supprimerTeteListe(liste); 
-        }
-        else if(position == liste->taille-1)
-        {
-            supprimerQueueListe(liste);  
-        } 
-        else if(liste->taille == 1)
-        {
-            viderListe(liste);
-        } 
-        else
-        {
-            elem->suivant->precedent = pred;
-            elem->precedent->suivant = suiv;
+    // Si la position est la tête
+    if(position == 0)
+    {
+        supprimerTeteListe(liste); 
+    }
+    // Si le position est la queue
+    else if(position == liste->taille-1)
+    {
+        supprimerQueueListe(liste);  
+    } 
+    // Si il n'y a qu'un élément dans la liste
+    else if(liste->taille == 1)
+    {
+        viderListe(liste);
+    } 
+    else
+    {
+        // On relie les suivants et précédents
+        elem->suivant->precedent = pred;
+        elem->precedent->suivant = suiv;
          
-            // On détruit la voiture de l'élément à la position donné
-            voi_detruire(&(elem->voiture));
-            free(elem->voiture);
+        // On détruit la voiture de l'élément à la position donné
+        voi_detruire(&(elem->voiture));
+        free(elem->voiture);
 
-            // On libère l'élément de la position courante
-            free(elem);        
-            liste->taille--;
-        }
+        // On libère l'élément de la position courante
+        free(elem);        
+        liste->taille--;
+    }
 }
 
 
@@ -503,6 +499,7 @@ void col_addVoitureSansTri(Collection self, const_Voiture voiture)
         self->listeVoitures = creerListeVide();
     }
 
+    // Puis on ajoute la voiture à la queue
     ajouterQueueListe(self->listeVoitures, v);
 
     // Si la taille est de 1 alors la collection est triee
@@ -527,7 +524,7 @@ void col_addVoitureAvecTri(Collection self, const_Voiture voiture)
         self->listeVoitures = creerListeVide();
         col_addVoitureSansTri(self, voiture);
     }
-    // Si la liste n'est pas vide alors au procede a l'ajout avec tri
+    // Si la liste n'est pas vide alors au procède a l'ajout avec tri
     else
     {
         // Creer une copie de voiture pour l'ajouter a la liste
@@ -537,7 +534,7 @@ void col_addVoitureAvecTri(Collection self, const_Voiture voiture)
         Voiture vParcourue = recupTeteListe(self->listeVoitures);
         int i = 0;
 
-        // Je parcourt la liste tant que j'ai pas trouvé une voiture plus recente que la voiture a ajouter
+        // On parcourt la liste tant qu'on a pas trouvé une voiture plus recente que la voiture a ajouter
         while (voi_getAnnee(vParcourue) < voi_getAnnee(voiture))
         {
             i++;
@@ -550,7 +547,7 @@ void col_addVoitureAvecTri(Collection self, const_Voiture voiture)
                 break;
             }
         }
-
+        //Puis on l'ajoute à la position trouvé
         ajouterPosListe(self->listeVoitures, v, i);
     }
 }
@@ -560,6 +557,8 @@ void col_supprVoitureSansTri(Collection self, int pos)
     myassert(self->listeVoitures != NULL, "La liste ne doit pas être vide");
     
     supprimerPosListe(self->listeVoitures, pos);
+    
+    // On supprime un élément sans tri la liste n'est alors plus trié
     self->estTriee = false;
 }
 
@@ -632,9 +631,11 @@ void col_afficher(const_Collection self)
 
 void col_ecrireFichier(const_Collection self, FILE *fd)
 {
+    // On écrit dans le fichier si la collection est triée puis le nombre de voiture
     fwrite(&(self->estTriee), sizeof(bool), 1, fd);
     fwrite(&(self->listeVoitures->taille), sizeof(int), 1, fd);
 
+    // Puis on écrit chaque voiture
     int size = self->listeVoitures->taille;
     for(int i=0; i<size; i++)
     {
@@ -651,10 +652,12 @@ void col_lireFichier(Collection self, FILE *fd)
         viderListe(self->listeVoitures);
     }
 
+    // On lit le booleen de tri est la taille
     fread(&(self->estTriee), sizeof(bool), 1, fd);
     int t;
     fread(&t, sizeof(int), 1, fd);
 
+    // Puis on lit chaque voiture du fichier
     self->listeVoitures = creerListeVide();
     for (int i = 0; i < t; i++)
     {
