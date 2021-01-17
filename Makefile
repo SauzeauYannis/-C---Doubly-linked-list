@@ -61,7 +61,7 @@ srcdir  = .
 # client
 #-------
 BIN = main
-SRC = myassert.c Voiture.c Collection.c main.c
+SRC = myassert.c main.c Voiture.c Collection.c
 OBJ = $(subst .c,.o,$(SRC))
 DFILES = $(subst .c,.d,$(SRC))
 LIBS =
