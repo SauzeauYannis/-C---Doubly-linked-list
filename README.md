@@ -57,7 +57,7 @@ Nous avons obtenu la note de ?/20. (résultat en Février)
 
 This project was carried out in the third year of the [CMI Informatique](http://formations.univ-poitiers.fr/fr/index/autre-diplome-niveau-master-AM/autre-diplome-niveau-master-AM/cmi-informatique-JD2XQGVY.html) at the [University of Poitiers](https://www.univ-poitiers.fr/en/) as part of the [Advanced C programming](http://formations.univ-poitiers.fr/fr/index/autre-diplome-niveau-master-AM/autre-diplome-niveau-master-AM/cmi-informatique-JD2XQGVY/specialite-s5-JD2XSMB7/programmation-avancee-en-c-JBI8HO7J.html) teaching programme.
 
-This project was developed in pairs and with [Visual Studio Code](https://code.visualstudio.com/) IDE.
+This project was developed in pairs and with [Visual Studio Code](https://code.visualstudio.com/) IDE on Ubuntu.
 
 <a name="en_u"/>
 
